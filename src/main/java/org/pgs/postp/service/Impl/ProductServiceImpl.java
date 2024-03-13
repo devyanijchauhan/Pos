@@ -3,7 +3,9 @@ package org.pgs.postp.service.Impl;
 import org.pgs.postp.dto.ProductDTO;
 import org.pgs.postp.mapper.ProductMapper;
 import org.pgs.postp.model.ProductModel;
+import org.pgs.postp.model.SupplierModel;
 import org.pgs.postp.repository.ProductRepository;
+import org.pgs.postp.repository.SupplierRepository;
 import org.pgs.postp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,13 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final SupplierRepository supplierRepository;
+
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,SupplierRepository supplierRepository) {
         this.productRepository = productRepository;
+        this.supplierRepository = supplierRepository;
         this.productMapper = productMapper;
     }
 
@@ -38,12 +43,37 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDTO(product);
     }
 
-    @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        ProductModel product = productMapper.toEntity(productDTO);
-        ProductModel savedProduct = productRepository.save(product);
-        return productMapper.toDTO(savedProduct);
+//    @Override
+//    public ProductDTO createProduct(ProductDTO productDTO) {
+//        if (productDTO.getSupplierID() == null) {
+//            throw new IllegalArgumentException("Supplier must be provided");
+//        }
+//        ProductModel product = productMapper.toEntity(productDTO);
+//        ProductModel savedProduct = productRepository.save(product);
+//        return productMapper.toDTO(savedProduct);
+//    }
+@Override
+public ProductDTO createProduct(ProductDTO productDTO) {
+    if (productDTO.getSupplierID() == null) {
+        throw new IllegalArgumentException("Supplier must be provided");
     }
+
+    // Fetch the supplier from the database
+    SupplierModel supplier = supplierRepository.findById(productDTO.getSupplierID())
+            .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + productDTO.getSupplierID()));
+
+    // Create the ProductModel entity and set the supplier
+    ProductModel product = new ProductModel(
+            productDTO.getName(),
+            productDTO.getDescription(),
+            productDTO.getPrice(),
+            productDTO.getStockQuantity(),
+            supplier);
+
+    // Save the product to the database
+    ProductModel savedProduct = productRepository.save(product);
+    return productMapper.toDTO(savedProduct);
+}
 
     @Override
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {

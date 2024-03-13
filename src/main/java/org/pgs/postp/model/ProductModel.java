@@ -26,7 +26,7 @@ public class ProductModel {
     private int stockQuantity;
 
     @ManyToOne
-    @JoinColumn(name = "SupplierID", nullable = false)
+    @JoinColumn(name = "SupplierID", nullable = false,  referencedColumnName = "SupplierID")
     private SupplierModel supplier;
 
     @OneToMany(mappedBy = "product")

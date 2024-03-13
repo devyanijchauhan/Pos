@@ -13,7 +13,7 @@ public class BarcodeMapper {
             return null;
         }
         BarcodeDTO barcodeDTO = new BarcodeDTO();
-        barcodeDTO.setId(barcodeModel.getBarcodeID()); // Corrected method name to match the field name
+        barcodeDTO.setId(barcodeModel.getBarcodeID());
         barcodeDTO.setBarcodeNumber(barcodeModel.getBarcodeNumber());
         // Assuming product is set via ProductModel object in BarcodeModel
         if (barcodeModel.getProduct() != null) {
@@ -27,7 +27,7 @@ public class BarcodeMapper {
             return null;
         }
         BarcodeModel barcodeModel = new BarcodeModel();
-        barcodeModel.setBarcodeID(barcodeDTO.getId()); // Corrected method name to match the field name
+        barcodeModel.setBarcodeID(barcodeDTO.getId());
         barcodeModel.setBarcodeNumber(barcodeDTO.getBarcodeNumber());
         // Assuming productId is set via ProductModel object in BarcodeModel
         if (barcodeDTO.getProductId() != null) {

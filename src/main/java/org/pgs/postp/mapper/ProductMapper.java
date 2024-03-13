@@ -14,6 +14,9 @@ public class ProductMapper {
         dto.setName(model.getName());
         dto.setDescription(model.getDescription());
         dto.setPrice(model.getPrice());
+        dto.setStockQuantity(model.getStockQuantity());
+        dto.setSupplierID(model.getSupplier().getSupplierID());
+
         // You can map other fields here if needed
         return dto;
     }
