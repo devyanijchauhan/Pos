@@ -49,6 +49,15 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierDTO updateSupplier(Long id, SupplierDTO supplierDTO) {
         SupplierModel existingSupplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + id));
+        if(supplierDTO.getName()!=null){
+            existingSupplier.setName(supplierDTO.getName());
+        }
+        if(supplierDTO.getEmail()!=null){
+            existingSupplier.setEmail(supplierDTO.getEmail());
+        }
+        if(supplierDTO.getPhone()!=null){
+            existingSupplier.setPhone(supplierDTO.getPhone());
+        }
         // Update properties here
         SupplierModel updatedSupplier = supplierRepository.save(existingSupplier);
         return supplierMapper.toDTO(updatedSupplier);
