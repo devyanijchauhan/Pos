@@ -4,12 +4,12 @@ public class CustomerDTO {
     private Long id; // Updated field name
     private String name;
     private String email;
-    private String phone;
+    private Number phone;
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(Long id, String name, String email, String phone) {
+    public CustomerDTO(Long id, String name, String email, Number phone) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -40,11 +40,11 @@ public class CustomerDTO {
         this.email = email;
     }
 
-    public String getPhone() {
+    public Number getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Number phone) {
         this.phone = phone;
     }
 

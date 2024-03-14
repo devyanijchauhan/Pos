@@ -19,7 +19,7 @@ public class CustomerModel {
     private String email;
 
     @Column(name = "Phone")
-    private String phone;
+    private Number phone;
 
     @OneToMany(mappedBy = "id")
     private List<TransactionModel> transactions;
@@ -28,7 +28,7 @@ public class CustomerModel {
     public CustomerModel() {
     }
 
-    public CustomerModel(String name, String email, String phone) {
+    public CustomerModel(String name, String email, Number phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -59,11 +59,11 @@ public class CustomerModel {
         this.email = email;
     }
 
-    public String getPhone() {
+    public Number getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Number phone) {
         this.phone = phone;
     }
 
