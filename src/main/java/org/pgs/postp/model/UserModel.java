@@ -18,7 +18,7 @@ public class UserModel {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "RoleID", nullable = false)
+    @JoinColumn(name = "RoleID", nullable = false, referencedColumnName = "RoleID")
     private RoleModel role;
 
     // Constructors
