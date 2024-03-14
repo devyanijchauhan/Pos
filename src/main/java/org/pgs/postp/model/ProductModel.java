@@ -23,7 +23,7 @@ public class ProductModel {
     private BigDecimal price;
 
     @Column(name = "StockQuantity", nullable = false)
-    private int stockQuantity;
+    private BigDecimal stockQuantity;
 
     @ManyToOne
     @JoinColumn(name = "SupplierID", nullable = false,  referencedColumnName = "SupplierID")
@@ -36,7 +36,7 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String name, String description, BigDecimal price, int stockQuantity, SupplierModel supplier) {
+    public ProductModel(String name, String description, BigDecimal price, BigDecimal stockQuantity, SupplierModel supplier) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -85,11 +85,11 @@ public class ProductModel {
         this.price = price;
     }
 
-    public int getStockQuantity() {
+    public BigDecimal getStockQuantity() {
         return stockQuantity;
     }
 
-    public void setStockQuantity(int stockQuantity) {
+    public void setStockQuantity(BigDecimal stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
 

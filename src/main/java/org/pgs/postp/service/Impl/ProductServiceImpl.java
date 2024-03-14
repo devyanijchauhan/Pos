@@ -79,6 +79,23 @@ public ProductDTO createProduct(ProductDTO productDTO) {
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
         ProductModel existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+
+        if(productDTO.getName()!=null){
+            existingProduct.setName(productDTO.getName());
+        }
+
+        if(productDTO.getDescription()!=null){
+            existingProduct.setDescription(productDTO.getDescription());
+        }
+
+        if(productDTO.getStockQuantity()!=null){
+            existingProduct.setStockQuantity(productDTO.getStockQuantity());
+        }
+
+        if(productDTO.getPrice()!=null){
+            existingProduct.setPrice(productDTO.getPrice());
+        }
+
         // Update properties here
         ProductModel updatedProduct = productRepository.save(existingProduct);
         return productMapper.toDTO(updatedProduct);

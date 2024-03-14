@@ -39,6 +39,7 @@ public class ProductMapper {
         ProductModel productModel = new ProductModel();
         productModel.setProductId(productDTO.getProductId());
         productModel.setName(productDTO.getName());
+        productModel.setStockQuantity(productDTO.getStockQuantity());
         productModel.setDescription(productDTO.getDescription());
         productModel.setPrice(productDTO.getPrice());
         // You can map other fields here if needed

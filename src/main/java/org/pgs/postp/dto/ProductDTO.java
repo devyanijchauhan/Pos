@@ -7,14 +7,14 @@ public class ProductDTO {
     private String name;
     private String description;
     private BigDecimal price;
-    private int stockQuantity;
+    private BigDecimal stockQuantity;
     private Long supplierId;
 
     // Constructors
     public ProductDTO() {
     }
 
-    public ProductDTO(Long productId, String name, String description, BigDecimal price, int stockQuantity, Long supplierId) {
+    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal stockQuantity, Long supplierId) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -52,9 +52,9 @@ public class ProductDTO {
 
     public void setPrice(BigDecimal price) {this.price = price;}
 
-    public int getStockQuantity() {return stockQuantity;}
+    public BigDecimal getStockQuantity() {return stockQuantity;}
 
-    public void setStockQuantity(int stockQuantity) {this.stockQuantity = stockQuantity;}
+    public void setStockQuantity(BigDecimal stockQuantity) {this.stockQuantity = stockQuantity;}
 
     public Long getSupplierID() {return supplierId;}
 
