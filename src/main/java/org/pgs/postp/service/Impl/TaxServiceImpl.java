@@ -49,6 +49,10 @@ public class TaxServiceImpl implements TaxService {
     public TaxDTO updateTax(Long id, TaxDTO taxDTO) {
         TaxModel existingTax = taxRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tax not found with id: " + id));
+
+        existingTax.setTaxName(taxDTO.getTaxName());
+        existingTax.setTaxRate(taxDTO.getTaxRate());
+
         // Update properties here
         TaxModel updatedTax = taxRepository.save(existingTax);
         return taxMapper.toDTO(updatedTax);
