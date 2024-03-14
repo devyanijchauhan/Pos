@@ -19,7 +19,7 @@ public class SupplierModel {
     private String email;
 
     @Column(name = "Phone")
-    private String phone;
+    private Number phone;
 
     @OneToMany(mappedBy = "supplier")
     private List<ProductModel> products;
@@ -28,7 +28,7 @@ public class SupplierModel {
     public SupplierModel() {
     }
 
-    public SupplierModel(String name, String email, String phone) {
+    public SupplierModel(String name, String email, Number phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -59,11 +59,11 @@ public class SupplierModel {
         this.email = email;
     }
 
-    public String getPhone() {
+    public Number getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Number phone) {
         this.phone = phone;
     }
 

@@ -4,13 +4,13 @@ public class SupplierDTO {
     private Long supplierID;
     private String name;
     private String email;
-    private String phone;
+    private Number phone;
 
     // Constructors
     public SupplierDTO() {
     }
 
-    public SupplierDTO(Long supplierID, String name, String email, String phone) {
+    public SupplierDTO(Long supplierID, String name, String email, Number phone) {
         this.supplierID = supplierID;
         this.name = name;
         this.email = email;
@@ -42,11 +42,11 @@ public class SupplierDTO {
         this.email = email;
     }
 
-    public String getPhone() {
+    public Number getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Number phone) {
         this.phone = phone;
     }
 }
