@@ -11,9 +11,9 @@ public class BarcodeModel {
     @Column(name = "BarcodeID")
     private Long barcodeID;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
-    private ProductModel product;
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
+//    private ProductModel product;
 
     @Column(name = "BarcodeNumber", unique = true, nullable = false)
     private String barcodeNumber;
@@ -24,7 +24,7 @@ public class BarcodeModel {
 
     public BarcodeModel(Long barcodeID, ProductModel product, String barcodeNumber) {
         this.barcodeID = barcodeID;
-        this.product = product;
+//        this.product = product;
         this.barcodeNumber = barcodeNumber;
     }
 
@@ -37,13 +37,13 @@ public class BarcodeModel {
         this.barcodeID = barcodeID;
     }
 
-    public ProductModel getProduct() {
-        return product;
-    }
-
-    public void setProduct(ProductModel product) {
-        this.product = product;
-    }
+//    public ProductModel getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(ProductModel product) {
+//        this.product = product;
+//    }
 
     public String getBarcodeNumber() {
         return barcodeNumber;

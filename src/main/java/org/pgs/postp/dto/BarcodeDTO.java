@@ -3,7 +3,7 @@ package org.pgs.postp.dto;
 public class BarcodeDTO {
     private Long id;
     private String barcodeNumber;
-    private Long productId;
+//    private Long productId;
 
     public BarcodeDTO() {
     }
@@ -11,7 +11,7 @@ public class BarcodeDTO {
     public BarcodeDTO(Long id, String barcodeNumber, Long productId) {
         this.id = id;
         this.barcodeNumber = barcodeNumber;
-        this.productId = productId;
+//        this.productId = productId;
     }
 
     public Long getId() {
@@ -30,20 +30,20 @@ public class BarcodeDTO {
         this.barcodeNumber = barcodeNumber;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
+//    public Long getProductId() {
+//        return productId;
+//    }
+//
+//    public void setProductId(Long productId) {
+//        this.productId = productId;
+//    }
 
     @Override
     public String toString() {
         return "BarcodeDTO{" +
                 "id=" + id +
                 ", barcodeNumber='" + barcodeNumber + '\'' +
-                ", productId=" + productId +
+//                ", productId=" + productId +
                 '}';
     }
 }

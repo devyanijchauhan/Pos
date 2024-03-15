@@ -16,9 +16,9 @@ public class BarcodeMapper {
         barcodeDTO.setId(barcodeModel.getBarcodeID());
         barcodeDTO.setBarcodeNumber(barcodeModel.getBarcodeNumber());
         // Assuming product is set via ProductModel object in BarcodeModel
-        if (barcodeModel.getProduct() != null) {
-            barcodeDTO.setProductId(barcodeModel.getProduct().getProductId());
-        }
+//        if (barcodeModel.getProduct() != null) {
+//            barcodeDTO.setProductId(barcodeModel.getProduct().getProductId());
+//        }
         return barcodeDTO;
     }
 
@@ -30,11 +30,11 @@ public class BarcodeMapper {
         barcodeModel.setBarcodeID(barcodeDTO.getId());
         barcodeModel.setBarcodeNumber(barcodeDTO.getBarcodeNumber());
         // Assuming productId is set via ProductModel object in BarcodeModel
-        if (barcodeDTO.getProductId() != null) {
-            ProductModel product = new ProductModel();
-            product.setProductId(barcodeDTO.getProductId());
-            barcodeModel.setProduct(product);
-        }
+//        if (barcodeDTO.getProductId() != null) {
+//            ProductModel product = new ProductModel();
+//            product.setProductId(barcodeDTO.getProductId());
+//            barcodeModel.setProduct(product);
+//        }
         return barcodeModel;
     }
 }
