@@ -20,19 +20,18 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final SupplierRepository supplierRepository;
 
-
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper,SupplierRepository supplierRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, SupplierRepository supplierRepository) {
         this.productRepository = productRepository;
-        this.supplierRepository = supplierRepository;
         this.productMapper = productMapper;
+        this.supplierRepository = supplierRepository;
     }
 
     @Override
     public List<ProductDTO> getAllProducts() {
         List<ProductModel> products = productRepository.findAll();
         return products.stream()
-                .map(productMapper::toDTO)
+                .map(ProductMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -43,57 +42,60 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDTO(product);
     }
 
-//    @Override
-//    public ProductDTO createProduct(ProductDTO productDTO) {
-//        if (productDTO.getSupplierID() == null) {
-//            throw new IllegalArgumentException("Supplier must be provided");
-//        }
-//        ProductModel product = productMapper.toEntity(productDTO);
-//        ProductModel savedProduct = productRepository.save(product);
-//        return productMapper.toDTO(savedProduct);
-//    }
-@Override
-public ProductDTO createProduct(ProductDTO productDTO) {
-    if (productDTO.getSupplierID() == null) {
-        throw new IllegalArgumentException("Supplier must be provided");
+    @Override
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        if (productDTO.getSupplierIds() == null || productDTO.getSupplierIds().isEmpty()) {
+            throw new IllegalArgumentException("At least one supplier must be provided");
+        }
+
+        // Fetch the suppliers from the database
+        List<SupplierModel> suppliers = productDTO.getSupplierIds().stream()
+                .map(supplierId -> supplierRepository.findById(supplierId)
+                        .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + supplierId)))
+                .collect(Collectors.toList());
+
+        // Create the ProductModel entity and set the suppliers
+        ProductModel product = new ProductModel(
+                productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getTax(),
+                productDTO.getTotal(),
+                productDTO.getStockQuantity(),
+                suppliers);
+
+        // Save the product to the database
+        ProductModel savedProduct = productRepository.save(product);
+        return productMapper.toDTO(savedProduct);
     }
-
-    // Fetch the supplier from the database
-    SupplierModel supplier = supplierRepository.findById(productDTO.getSupplierID())
-            .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + productDTO.getSupplierID()));
-
-    // Create the ProductModel entity and set the supplier
-    ProductModel product = new ProductModel(
-            productDTO.getName(),
-            productDTO.getDescription(),
-            productDTO.getPrice(),
-            productDTO.getStockQuantity(),
-            supplier);
-
-    // Save the product to the database
-    ProductModel savedProduct = productRepository.save(product);
-    return productMapper.toDTO(savedProduct);
-}
 
     @Override
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
         ProductModel existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
-        if(productDTO.getName()!=null){
+        if (productDTO.getName() != null) {
             existingProduct.setName(productDTO.getName());
         }
 
-        if(productDTO.getDescription()!=null){
+        if (productDTO.getDescription() != null) {
             existingProduct.setDescription(productDTO.getDescription());
         }
 
-        if(productDTO.getStockQuantity()!=null){
-            existingProduct.setStockQuantity(productDTO.getStockQuantity());
+        if (productDTO.getPrice() != null) {
+            existingProduct.setPrice(productDTO.getPrice());
         }
 
-        if(productDTO.getPrice()!=null){
-            existingProduct.setPrice(productDTO.getPrice());
+        if (productDTO.getTax() != null) {
+            existingProduct.setTax(productDTO.getTax());
+        }
+
+        if (productDTO.getTotal() != null) {
+            existingProduct.setTotal(productDTO.getTotal());
+        }
+
+        if (productDTO.getStockQuantity() != null) {
+            existingProduct.setStockQuantity(productDTO.getStockQuantity());
         }
 
         // Update properties here

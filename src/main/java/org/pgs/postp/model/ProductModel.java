@@ -22,12 +22,22 @@ public class ProductModel {
     @Column(name = "Price", nullable = false)
     private BigDecimal price;
 
+    @Column(name = "Tax", nullable = false)
+    private BigDecimal tax;
+
+    @Column(name = "Total", nullable = false)
+    private BigDecimal total;
+
     @Column(name = "StockQuantity", nullable = false)
     private BigDecimal stockQuantity;
 
-    @ManyToOne
-    @JoinColumn(name = "SupplierID", nullable = false,  referencedColumnName = "SupplierID")
-    private SupplierModel supplier;
+    @ManyToMany
+    @JoinTable(
+            name = "Product_Supplier",
+            joinColumns = @JoinColumn(name = "ProductID"),
+            inverseJoinColumns = @JoinColumn(name = "SupplierID")
+    )
+    private List<SupplierModel> suppliers;
 
     @OneToMany(mappedBy = "product")
     private List<TransactionDetailModel> transactionDetails;
@@ -36,12 +46,14 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String name, String description, BigDecimal price, BigDecimal stockQuantity, SupplierModel supplier) {
+    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, List<SupplierModel> suppliers) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.tax = tax;
+        this.total = total;
         this.stockQuantity = stockQuantity;
-        this.supplier = supplier;
+        this.suppliers = suppliers;
     }
 
     // Getters and Setters
@@ -51,14 +63,6 @@ public class ProductModel {
 
     public void setProductId(Long productId) {
         this.productId = productId;
-    }
-
-    public Long getSupplierID() {
-        return supplier != null ? supplier.getSupplierID() : null;
-    }
-
-    public void setSupplierID(Long supplierID) {
-        // This method can be ignored as supplierID is managed via the supplier field
     }
 
     public String getName() {
@@ -85,6 +89,22 @@ public class ProductModel {
         this.price = price;
     }
 
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
     public BigDecimal getStockQuantity() {
         return stockQuantity;
     }
@@ -93,12 +113,12 @@ public class ProductModel {
         this.stockQuantity = stockQuantity;
     }
 
-    public SupplierModel getSupplier() {
-        return supplier;
+    public List<SupplierModel> getSuppliers() {
+        return suppliers;
     }
 
-    public void setSupplier(SupplierModel supplier) {
-        this.supplier = supplier;
+    public void setSuppliers(List<SupplierModel> suppliers) {
+        this.suppliers = suppliers;
     }
 
     public List<TransactionDetailModel> getTransactionDetails() {
@@ -109,7 +129,4 @@ public class ProductModel {
         this.transactionDetails = transactionDetails;
     }
 
-    public Long getSupplierId() {
-        return null;
-    }
 }
