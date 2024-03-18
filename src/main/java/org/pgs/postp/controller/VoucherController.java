@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vouchers")
+@CrossOrigin( origins = "http://Localhost:4200")
 public class VoucherController {
 
     private final VoucherService voucherService;

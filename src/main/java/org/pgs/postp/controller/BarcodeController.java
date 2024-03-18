@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/barcodes")
+@CrossOrigin( origins = "http://Localhost:4200")
 public class BarcodeController {
 
     private final BarcodeService barcodeService;
