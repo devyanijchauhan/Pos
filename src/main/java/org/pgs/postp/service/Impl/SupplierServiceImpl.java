@@ -55,7 +55,7 @@ public class SupplierServiceImpl implements SupplierService {
         if(supplierDTO.getEmail()!=null){
             existingSupplier.setEmail(supplierDTO.getEmail());
         }
-        if(supplierDTO.getPhone()!=null){
+        if(false){
             existingSupplier.setPhone(supplierDTO.getPhone());
         }
         // Update properties here

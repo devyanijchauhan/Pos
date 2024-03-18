@@ -1,16 +1,18 @@
 package org.pgs.postp.dto;
 
+import java.math.BigInteger;
+
 public class SupplierDTO {
     private Long supplierID;
     private String name;
     private String email;
-    private Number phone;
+    private BigInteger phone;
 
     // Constructors
     public SupplierDTO() {
     }
 
-    public SupplierDTO(Long supplierID, String name, String email, Number phone) {
+    public SupplierDTO(Long supplierID, String name, String email, BigInteger phone) {
         this.supplierID = supplierID;
         this.name = name;
         this.email = email;
@@ -42,11 +44,11 @@ public class SupplierDTO {
         this.email = email;
     }
 
-    public Number getPhone() {
+    public BigInteger getPhone() {
         return phone;
     }
 
-    public void setPhone(Number phone) {
+    public void setPhone(BigInteger phone) {
         this.phone = phone;
     }
 }

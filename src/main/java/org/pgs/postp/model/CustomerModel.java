@@ -1,6 +1,8 @@
 package org.pgs.postp.model;
 
 import jakarta.persistence.*;
+
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -19,7 +21,7 @@ public class CustomerModel {
     private String email;
 
     @Column(name = "Phone")
-    private Number phone;
+    private BigInteger phone;
 
     @OneToMany(mappedBy = "id")
     private List<TransactionModel> transactions;
@@ -28,7 +30,7 @@ public class CustomerModel {
     public CustomerModel() {
     }
 
-    public CustomerModel(String name, String email, Number phone) {
+    public CustomerModel(String name, String email, BigInteger phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -59,11 +61,11 @@ public class CustomerModel {
         this.email = email;
     }
 
-    public Number getPhone() {
+    public BigInteger getPhone() {
         return phone;
     }
 
-    public void setPhone(Number phone) {
+    public void setPhone(BigInteger phone) {
         this.phone = phone;
     }
 
