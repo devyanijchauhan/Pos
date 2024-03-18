@@ -58,25 +58,26 @@ public class VoucherServiceImpl implements VoucherService {
         VoucherModel existingVoucher = voucherRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Voucher not found with id: " + id));
 
-        if (voucherDTO.getVoucherType() != null) {
-            existingVoucher.setVoucherType(voucherDTO.getVoucherType());
+        if (voucherDTO.getVoucherCode() != null) {
+            existingVoucher.setVoucherCode(voucherDTO.getVoucherCode());
         }
-
-        if (voucherDTO.getVoucherDuration() != null) {
-            existingVoucher.setVoucherDuration(voucherDTO.getVoucherDuration());
-        }
-
-        if (voucherDTO.getVoucherDuration() != null) {
-            existingVoucher.setVoucherDuration(voucherDTO.getVoucherDuration());
-        }
-
-        if (voucherDTO.getVoucherCount() != null) {
-            existingVoucher.setVoucherCount(voucherDTO.getVoucherCount());
-        }
-
         if (voucherDTO.getDiscountAmount() != null) {
             existingVoucher.setDiscountAmount(voucherDTO.getDiscountAmount());
         }
+
+        if (voucherDTO.getValidForNumberOfCustomers() != null) {
+            existingVoucher.setValidForNumberOfCustomers(voucherDTO.getValidForNumberOfCustomers());
+        }
+
+        if (voucherDTO.getValidForNumberOfDays() != null) {
+            existingVoucher.setValidForNumberOfDays(voucherDTO.getValidForNumberOfDays());
+        }
+
+//        if (voucherDTO.getValidUntil() != null) {
+//            existingVoucher.setValidUntil(voucherDTO.getValidUntil());
+//        }
+
+
         // Update Properties here
         VoucherModel updateVoucher = voucherRepository.save(existingVoucher);
         return voucherMapper.toDTO(updateVoucher);

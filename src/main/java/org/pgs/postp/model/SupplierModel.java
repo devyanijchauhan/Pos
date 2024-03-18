@@ -23,8 +23,8 @@ public class SupplierModel {
     @Column(name = "Phone")
     private BigInteger phone;
 
-    @OneToMany(mappedBy = "supplier")
-    private List<ProductModel> products;
+//    @OneToMany(mappedBy = "supplier")
+//    private List<ProductModel> products;
 
     // Constructors
     public SupplierModel() {
@@ -69,11 +69,11 @@ public class SupplierModel {
         this.phone = phone;
     }
 
-    public List<ProductModel> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductModel> products) {
-        this.products = products;
-    }
+//    public List<ProductModel> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(List<ProductModel> products) {
+//        this.products = products;
+//    }
 }
