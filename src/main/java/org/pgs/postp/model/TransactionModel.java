@@ -19,7 +19,7 @@ public class TransactionModel {
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "CustomerID")
+    @JoinColumn(name = "CustomerID", referencedColumnName = "CustomerID")
     private CustomerModel id;
 
     @Column(name = "TotalAmount", nullable = false)
