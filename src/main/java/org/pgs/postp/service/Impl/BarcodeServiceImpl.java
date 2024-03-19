@@ -80,8 +80,9 @@ public class BarcodeServiceImpl implements BarcodeService {
                 .orElseThrow(() -> new RuntimeException("Barcode not found with id: " + id));
 
         // Update the properties of the existing BarcodeModel with the data from barcodeDTO
-        existingBarcode.setBarcodeNumber(barcodeDTO.getBarcodeNumber());
-        // Update other properties as needed
+        if(barcodeDTO.getBarcodeNumber()!=null){
+            existingBarcode.setBarcodeNumber(barcodeDTO.getBarcodeNumber());
+        }
 
         // Save the updated BarcodeModel
         BarcodeModel updatedBarcode = barcodeRepository.save(existingBarcode);
