@@ -31,6 +31,9 @@ public class ProductModel {
     @Column(name = "StockQuantity", nullable = false)
     private BigDecimal stockQuantity;
 
+    @Column(name = "PurchasePrice", nullable = false)
+    private BigDecimal purchasePrice;
+
     @ManyToMany
     @JoinTable(
             name = "Product_Supplier",
@@ -46,13 +49,14 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, List<SupplierModel> suppliers) {
+    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, List<SupplierModel> suppliers) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.tax = tax;
         this.total = total;
         this.stockQuantity = stockQuantity;
+        this.purchasePrice = purchasePrice;
         this.suppliers = suppliers;
     }
 
@@ -111,6 +115,14 @@ public class ProductModel {
 
     public void setStockQuantity(BigDecimal stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public BigDecimal getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(BigDecimal purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public List<SupplierModel> getSuppliers() {

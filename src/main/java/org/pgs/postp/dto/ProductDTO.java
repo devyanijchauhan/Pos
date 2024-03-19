@@ -12,13 +12,15 @@ public class ProductDTO {
     private BigDecimal tax;
     private BigDecimal total;
     private BigDecimal stockQuantity;
+
+    private BigDecimal purchasePrice;
     private List<Long> supplierIds;
 
     // Constructors
     public ProductDTO() {
     }
 
-    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, List<Long> supplierIds) {
+    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, List<Long> supplierIds) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -26,6 +28,7 @@ public class ProductDTO {
         this.tax = tax;
         this.total = total;
         this.stockQuantity = stockQuantity;
+        this.purchasePrice = purchasePrice;
         this.supplierIds = supplierIds;
     }
 
@@ -84,6 +87,14 @@ public class ProductDTO {
 
     public void setStockQuantity(BigDecimal stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public BigDecimal getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(BigDecimal purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public List<Long> getSupplierIds() {

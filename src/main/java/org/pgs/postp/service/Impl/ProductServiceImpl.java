@@ -62,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getTax(),
                 productDTO.getTotal(),
                 productDTO.getStockQuantity(),
+                productDTO.getPurchasePrice(),
                 suppliers);
 
         // Save the product to the database
@@ -97,6 +98,11 @@ public class ProductServiceImpl implements ProductService {
         if (productDTO.getStockQuantity() != null) {
             existingProduct.setStockQuantity(productDTO.getStockQuantity());
         }
+
+        if (productDTO.getPurchasePrice() != null) {
+            existingProduct.setPurchasePrice(productDTO.getPurchasePrice());
+        }
+
 
         // Update properties here
         ProductModel updatedProduct = productRepository.save(existingProduct);
