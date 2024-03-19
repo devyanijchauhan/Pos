@@ -49,14 +49,23 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierDTO updateSupplier(Long id, SupplierDTO supplierDTO) {
         SupplierModel existingSupplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + id));
-        if(supplierDTO.getName()!=null){
-            existingSupplier.setName(supplierDTO.getName());
+        if(supplierDTO.getSupplierAgency()!=null){ // Updated field name
+            existingSupplier.setSupplierAgency(supplierDTO.getSupplierAgency()); // Updated field name
         }
-        if(supplierDTO.getEmail()!=null){
-            existingSupplier.setEmail(supplierDTO.getEmail());
+        if(supplierDTO.getContactPerson()!=null){ // Updated field name
+            existingSupplier.setContactPerson(supplierDTO.getContactPerson()); // Updated field name
         }
-        if(supplierDTO.getPhone()!=null){
-            existingSupplier.setPhone(supplierDTO.getPhone());
+        if(supplierDTO.getSupplierEmail()!=null){ // Updated field name
+            existingSupplier.setSupplierEmail(supplierDTO.getSupplierEmail()); // Updated field name
+        }
+        if(supplierDTO.getSupplierPhone()!=null){ // Updated field name
+            existingSupplier.setSupplierPhone(supplierDTO.getSupplierPhone()); // Updated field name
+        }
+        if(supplierDTO.getContactPersonEmail()!=null){ // Updated field name
+            existingSupplier.setContactPersonEmail(supplierDTO.getContactPersonEmail()); // Updated field name
+        }
+        if(supplierDTO.getContactPersonPhone()!=null){ // Updated field name
+            existingSupplier.setContactPersonPhone(supplierDTO.getContactPersonPhone()); // Updated field name
         }
         // Update properties here
         SupplierModel updatedSupplier = supplierRepository.save(existingSupplier);
