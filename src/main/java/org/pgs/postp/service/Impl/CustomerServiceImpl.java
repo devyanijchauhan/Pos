@@ -49,9 +49,20 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO) {
         CustomerModel existingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
-        existingCustomer.setName(customerDTO.getName());
-        existingCustomer.setEmail(customerDTO.getEmail());
-        existingCustomer.setPhone(customerDTO.getPhone());
+
+        if(customerDTO.getName()!=null){
+            existingCustomer.setName(customerDTO.getName());
+        }
+        if(customerDTO.getEmail()!=null){
+            existingCustomer.setEmail(customerDTO.getEmail());
+        }
+        if(customerDTO.getPhone()!=null){
+            existingCustomer.setPhone(customerDTO.getPhone());
+        }
+
+//        existingCustomer.setName(customerDTO.getName());
+//        existingCustomer.setEmail(customerDTO.getEmail());
+//        existingCustomer.setPhone(customerDTO.getPhone());
         CustomerModel updatedCustomer = customerRepository.save(existingCustomer);
         return customerMapper.toDTO(updatedCustomer);
     }

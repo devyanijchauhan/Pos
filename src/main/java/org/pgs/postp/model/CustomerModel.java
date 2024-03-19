@@ -23,8 +23,8 @@ public class CustomerModel {
     @Column(name = "Phone")
     private BigInteger phone;
 
-    @OneToMany(mappedBy = "id")
-    private List<TransactionModel> transactions;
+//    @OneToMany(mappedBy = "id")
+//    private List<TransactionModel> transactions;
 
     // Constructors
     public CustomerModel() {
@@ -69,11 +69,11 @@ public class CustomerModel {
         this.phone = phone;
     }
 
-    public List<TransactionModel> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<TransactionModel> transactions) {
-        this.transactions = transactions;
-    }
+//    public List<TransactionModel> getTransactions() {
+//        return transactions;
+//    }
+//
+//    public void setTransactions(List<TransactionModel> transactions) {
+//        this.transactions = transactions;
+//    }
 }
