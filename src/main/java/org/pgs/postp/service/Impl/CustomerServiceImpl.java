@@ -110,12 +110,15 @@ public class CustomerServiceImpl implements CustomerService {
 
         String line;
 
+        List<CustomerModel> customersToAdd = new ArrayList<>();
+
         List<String> existingEmails = customerRepository.findAll().stream()
                 .map(CustomerModel::getEmail)
                 .collect(Collectors.toList());
         List<BigInteger> existingPhones = customerRepository.findAll().stream()
                 .map(CustomerModel::getPhone)
                 .collect(Collectors.toList());
+
 
         while ((line = br.readLine()) != null) {
             String[] data = line.split(",");
@@ -129,15 +132,15 @@ public class CustomerServiceImpl implements CustomerService {
 //                continue;
 //            }
 
-            if (existingEmails.contains(email)) {
-                throw new RuntimeException("Duplicate email found in CSV: " + email);
+            if (existingEmails.contains(email) || existingPhones.contains(phone)) {
+                System.out.println("Duplicate email or phone found in CSV, skipping record: " + email + " / " + phone);
+                continue;
+//                throw new RuntimeException("Duplicate email found in CSV: " + email);
             }
-            if (existingPhones.contains(phone)) {
-                throw new RuntimeException("Duplicate phone number found in CSV: " + phone);
-            }
+//            if (existingPhones.contains(phone)) {
+//                throw new RuntimeException("Duplicate phone number found in CSV: " + phone);
+//            }
 
-            existingEmails.add(email);
-            existingPhones.add(phone);
 
             CustomerModel customerModel = new CustomerModel();
             customerModel.setName(name);
@@ -145,8 +148,13 @@ public class CustomerServiceImpl implements CustomerService {
             customerModel.setPhone(phone);
             customerModel.setAddress(address);
 
-            customerRepository.save(customerModel);
+            customersToAdd.add(customerModel);
+            existingEmails.add(email);
+            existingPhones.add(phone);
         }
+
+        // Save only the non-duplicate customer models
+        customerRepository.saveAll(customersToAdd);
         br.close();
     }
 }

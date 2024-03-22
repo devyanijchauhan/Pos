@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -115,6 +116,7 @@ public class SupplierServiceImpl implements SupplierService {
         supplierRepository.deleteById(id);
     }
 
+    @Override
     public void processCSV(MultipartFile file) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
 
@@ -122,6 +124,9 @@ public class SupplierServiceImpl implements SupplierService {
         br.readLine();
 
         String line;
+
+        List<SupplierModel> suppliersToAdd = new ArrayList<>();
+
 
         List<String> existingSupplierEmails = supplierRepository.findAll().stream()
                 .map(SupplierModel::getSupplierEmail)
@@ -149,24 +154,20 @@ public class SupplierServiceImpl implements SupplierService {
             BigInteger contactPersonPhone = new BigInteger(data[5].trim());
             String address = data[6].trim();
 
-            if (existingSupplierEmails.contains(supplierEmail)) {
-                throw new RuntimeException("Duplicate supplier email found in CSV: " + supplierEmail);
+            if (existingSupplierEmails.contains(supplierEmail) || existingSupplierPhones.contains(supplierPhone) ||
+                    existingContactPersonEmails.contains(contactPersonEmail) || existingContactPersonPhones.contains(contactPersonPhone)) {
+                System.out.println("Duplicate email or phone found in CSV, skipping record: " + supplierEmail + " / " + supplierPhone + contactPersonEmail + " / " + contactPersonPhone);
+                continue;
             }
-            if (existingSupplierPhones.contains(supplierPhone)) {
-                throw new RuntimeException("Duplicate supplier phone number found in CSV: " + supplierPhone);
-            }
-            if (existingContactPersonEmails.contains(contactPersonEmail)) {
-                throw new RuntimeException("Duplicate contact person email found in CSV: " + contactPersonEmail);
-            }
-            if (existingContactPersonPhones.contains(contactPersonPhone)) {
-                throw new RuntimeException("Duplicate contact person phone number found in CSV: " + contactPersonPhone);
-            }
-
-
-            existingSupplierEmails.add(supplierEmail);
-            existingSupplierPhones.add(supplierPhone);
-            existingContactPersonEmails.add(contactPersonEmail);
-            existingContactPersonPhones.add(contactPersonPhone);
+//            if (existingSupplierPhones.contains(supplierPhone)) {
+//                throw new RuntimeException("Duplicate supplier phone number found in CSV: " + supplierPhone);
+//            }
+//            if (existingContactPersonEmails.contains(contactPersonEmail)) {
+//                throw new RuntimeException("Duplicate contact person email found in CSV: " + contactPersonEmail);
+//            }
+//            if (existingContactPersonPhones.contains(contactPersonPhone)) {
+//                throw new RuntimeException("Duplicate contact person phone number found in CSV: " + contactPersonPhone);
+//            }
 
 
 //            if (contactPersonEmail != null) {
@@ -184,8 +185,16 @@ public class SupplierServiceImpl implements SupplierService {
             supplierModel.setContactPersonPhone(contactPersonPhone);
             supplierModel.setAddress(address);
 
-            supplierRepository.save(supplierModel);
+            suppliersToAdd.add(supplierModel);
+            existingSupplierEmails.add(supplierEmail);
+            existingSupplierPhones.add(supplierPhone);
+            existingContactPersonEmails.add(contactPersonEmail);
+            existingContactPersonPhones.add(contactPersonPhone);
+
         }
+
+        // Save only the non-duplicate customer models
+        supplierRepository.saveAll(suppliersToAdd);
         br.close();
     }
 
