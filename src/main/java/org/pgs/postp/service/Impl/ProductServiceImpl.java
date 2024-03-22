@@ -1,5 +1,11 @@
 package org.pgs.postp.service.Impl;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import org.pgs.postp.dto.ProductDTO;
 import org.pgs.postp.mapper.ProductMapper;
 import org.pgs.postp.model.ProductModel;
@@ -9,8 +15,17 @@ import org.pgs.postp.repository.SupplierRepository;
 import org.pgs.postp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,6 +78,7 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getTotal(),
                 productDTO.getStockQuantity(),
                 productDTO.getPurchasePrice(),
+                productDTO.getBarcodeNumber(),
                 suppliers);
 
         // Save the product to the database
@@ -83,9 +99,9 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setDescription(productDTO.getDescription());
         }
 
-        if (productDTO.getPrice() != null) {
+  if (productDTO.getPrice() != null) {
             existingProduct.setPrice(productDTO.getPrice());
-        }
+    }
 
         if (productDTO.getTax() != null) {
             existingProduct.setTax(productDTO.getTax());
@@ -102,7 +118,9 @@ public class ProductServiceImpl implements ProductService {
         if (productDTO.getPurchasePrice() != null) {
             existingProduct.setPurchasePrice(productDTO.getPurchasePrice());
         }
-
+        if (productDTO.getBarcodeNumber() != null) {
+            existingProduct.setBarcodeNumber(productDTO.getBarcodeNumber());
+        }
 
         // Update properties here
         ProductModel updatedProduct = productRepository.save(existingProduct);
@@ -116,4 +134,70 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.deleteById(id);
     }
+
+    public void processCSV(MultipartFile file) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
+
+        // Skip the header line
+        br.readLine();
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+            String name = data[0].trim();
+            String description = data[1].trim();
+            BigDecimal price = new BigDecimal(data[2].trim());
+            BigDecimal tax = new BigDecimal(data[3].trim());
+            BigDecimal total = new BigDecimal(data[4].trim());
+            BigDecimal stockQuantity = new BigDecimal(data[5].trim());
+            BigDecimal purchasePrice = new BigDecimal(data[6].trim());
+            String barcode = generateBarcode();
+
+            ProductModel product = new ProductModel();
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setTax(tax);
+            product.setTotal(total);
+            product.setStockQuantity(stockQuantity);
+            product.setPurchasePrice(purchasePrice);
+             product.setBarcodeNumber(barcode);
+            // product.s(generateBarcode(barcode, 200, 50));
+            productRepository.save(product);
+        }
+        br.close();
+    }
+
+
+    //      try {
+//        byte[] barcodeBytes = barcodeServiceImpl.generateBarcode(text, 200, 50); // Adjust width and height as needed
+//        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(barcodeBytes);
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//    }
+    private String generateBarcode() {
+        // Generate random barcode (you can implement your own logic)
+        Random random = new Random();
+        StringBuilder barcode = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            barcode.append(random.nextInt(10));
+        }
+        return barcode.toString();
+    }
+
+
+    public static byte[] generateBarcode(String barcodeText, int width, int height) throws WriterException, IOException {
+        // Set barcode parameters
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.MARGIN, 0); // Set margin to 0
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(barcodeText, BarcodeFormat.CODE_128, width, height, hints);
+
+        // Convert bitMatrix to byte array
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+        return outputStream.toByteArray();
+    }
+
+
 }

@@ -31,18 +31,22 @@ public class SupplierModel {
     @Column(name = "ContactPersonPhone")
     private BigInteger contactPersonPhone;
 
+    @Column(name = "Address")
+    private String address;
+
     // Constructors
     public SupplierModel() {
     }
 
     public SupplierModel(String supplierAgency, String contactPerson, String supplierEmail, BigInteger supplierPhone,
-                         String contactPersonEmail, BigInteger contactPersonPhone) {
+                         String contactPersonEmail, BigInteger contactPersonPhone, String address) {
         this.supplierAgency = supplierAgency;
         this.contactPerson = contactPerson;
         this.supplierEmail = supplierEmail;
         this.supplierPhone = supplierPhone;
         this.contactPersonEmail = contactPersonEmail;
         this.contactPersonPhone = contactPersonPhone;
+        this.address = address;
     }
 
     // Getters and Setters
@@ -100,5 +104,13 @@ public class SupplierModel {
 
     public void setContactPersonPhone(BigInteger contactPersonPhone) {
         this.contactPersonPhone = contactPersonPhone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

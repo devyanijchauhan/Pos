@@ -34,6 +34,10 @@ public class ProductModel {
     @Column(name = "PurchasePrice", nullable = false)
     private BigDecimal purchasePrice;
 
+    @Column(name = "BarcodeNumber", unique = true, nullable = false)
+    private String barcodeNumber;
+
+
     @ManyToMany
     @JoinTable(
             name = "Product_Supplier",
@@ -49,7 +53,7 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, List<SupplierModel> suppliers) {
+    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, String barcodeNumber, List<SupplierModel> suppliers) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -57,6 +61,7 @@ public class ProductModel {
         this.total = total;
         this.stockQuantity = stockQuantity;
         this.purchasePrice = purchasePrice;
+        this.barcodeNumber = barcodeNumber;
         this.suppliers = suppliers;
     }
 
@@ -123,6 +128,14 @@ public class ProductModel {
 
     public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
+    }
+
+    public String getBarcodeNumber() {
+        return barcodeNumber;
+    }
+
+    public void setBarcodeNumber(String barcodeNumber) {
+        this.barcodeNumber = barcodeNumber;
     }
 
     public List<SupplierModel> getSuppliers() {

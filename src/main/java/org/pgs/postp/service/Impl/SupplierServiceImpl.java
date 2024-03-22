@@ -2,13 +2,20 @@ package org.pgs.postp.service.Impl;
 
 import org.pgs.postp.dto.SupplierDTO;
 import org.pgs.postp.mapper.SupplierMapper;
+import org.pgs.postp.model.CustomerModel;
 import org.pgs.postp.model.SupplierModel;
 import org.pgs.postp.repository.SupplierRepository;
 import org.pgs.postp.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +47,27 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierDTO createSupplier(SupplierDTO supplierDTO) {
+
+        // Check if the supplier email already exists
+        if (supplierDTO.getSupplierEmail() != null && supplierRepository.existsBySupplierEmail(supplierDTO.getSupplierEmail())) {
+            throw new RuntimeException("Supplier email already exists: " + supplierDTO.getSupplierEmail());
+        }
+
+        // Check if the supplier phone number already exists
+        if (supplierDTO.getSupplierPhone() != null && supplierRepository.existsBySupplierPhone(supplierDTO.getSupplierPhone())) {
+            throw new RuntimeException(" Supplier phone number already exists: " + supplierDTO.getSupplierPhone());
+        }
+
+        // Check if the contact person email already exists
+        if (supplierDTO.getContactPersonEmail() != null && supplierRepository.existsByContactPersonEmail(supplierDTO.getContactPersonEmail())) {
+            throw new RuntimeException("Contact person email already exists: " + supplierDTO.getContactPersonEmail());
+        }
+
+        // Check if the contact person phone number already exists
+        if (supplierDTO.getContactPersonPhone() != null && supplierRepository.existsByContactPersonPhone(supplierDTO.getContactPersonPhone())) {
+            throw new RuntimeException("Contact person phone number already exists: " + supplierDTO.getContactPersonPhone());
+        }
+
         SupplierModel supplier = supplierMapper.toEntity(supplierDTO);
         SupplierModel savedSupplier = supplierRepository.save(supplier);
         return supplierMapper.toDTO(savedSupplier);
@@ -49,6 +77,8 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierDTO updateSupplier(Long id, SupplierDTO supplierDTO) {
         SupplierModel existingSupplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + id));
+
+
         if(supplierDTO.getSupplierAgency()!=null){ // Updated field name
             existingSupplier.setSupplierAgency(supplierDTO.getSupplierAgency()); // Updated field name
         }
@@ -67,6 +97,11 @@ public class SupplierServiceImpl implements SupplierService {
         if(supplierDTO.getContactPersonPhone()!=null){ // Updated field name
             existingSupplier.setContactPersonPhone(supplierDTO.getContactPersonPhone()); // Updated field name
         }
+
+        if(supplierDTO.getAddress()!=null){ // Updated field address
+            existingSupplier.setAddress(supplierDTO.getAddress()); // Updated field address
+        }
+
         // Update properties here
         SupplierModel updatedSupplier = supplierRepository.save(existingSupplier);
         return supplierMapper.toDTO(updatedSupplier);
@@ -79,4 +114,80 @@ public class SupplierServiceImpl implements SupplierService {
         }
         supplierRepository.deleteById(id);
     }
+
+    public void processCSV(MultipartFile file) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
+
+        // Skip the header line
+        br.readLine();
+
+        String line;
+
+        List<String> existingSupplierEmails = supplierRepository.findAll().stream()
+                .map(SupplierModel::getSupplierEmail)
+                .collect(Collectors.toList());
+        List<BigInteger> existingSupplierPhones = supplierRepository.findAll().stream()
+                .map(SupplierModel::getSupplierPhone)
+                .collect(Collectors.toList());
+        List<String> existingContactPersonEmails = supplierRepository.findAll().stream()
+                .map(SupplierModel::getContactPersonEmail)
+                //.filter(Objects::nonNull) // Filter out null values
+                .collect(Collectors.toList());
+        List<BigInteger> existingContactPersonPhones = supplierRepository.findAll().stream()
+                .map(SupplierModel::getContactPersonPhone)
+               // .filter(Objects::nonNull) // Filter out null values
+                .collect(Collectors.toList());
+
+
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+            String supplierAgency = data[0].trim();
+            String contactPerson = data[1].trim();
+            String supplierEmail = data[2].trim();
+            BigInteger supplierPhone = new BigInteger(data[3].trim());
+            String contactPersonEmail = data[4].trim();
+            BigInteger contactPersonPhone = new BigInteger(data[5].trim());
+            String address = data[6].trim();
+
+            if (existingSupplierEmails.contains(supplierEmail)) {
+                throw new RuntimeException("Duplicate supplier email found in CSV: " + supplierEmail);
+            }
+            if (existingSupplierPhones.contains(supplierPhone)) {
+                throw new RuntimeException("Duplicate supplier phone number found in CSV: " + supplierPhone);
+            }
+            if (existingContactPersonEmails.contains(contactPersonEmail)) {
+                throw new RuntimeException("Duplicate contact person email found in CSV: " + contactPersonEmail);
+            }
+            if (existingContactPersonPhones.contains(contactPersonPhone)) {
+                throw new RuntimeException("Duplicate contact person phone number found in CSV: " + contactPersonPhone);
+            }
+
+
+            existingSupplierEmails.add(supplierEmail);
+            existingSupplierPhones.add(supplierPhone);
+            existingContactPersonEmails.add(contactPersonEmail);
+            existingContactPersonPhones.add(contactPersonPhone);
+
+
+//            if (contactPersonEmail != null) {
+//                existingContactPersonEmails.add(contactPersonEmail);
+//            }
+//            if (contactPersonPhone != null) {
+//                existingContactPersonPhones.add(contactPersonPhone);
+//            }
+            SupplierModel supplierModel = new SupplierModel();
+            supplierModel.setSupplierAgency(supplierAgency);
+            supplierModel.setContactPerson(contactPerson);
+            supplierModel.setSupplierEmail(supplierEmail);
+            supplierModel.setSupplierPhone(supplierPhone);
+            supplierModel.setContactPersonEmail(contactPersonEmail);
+            supplierModel.setContactPersonPhone(contactPersonPhone);
+            supplierModel.setAddress(address);
+
+            supplierRepository.save(supplierModel);
+        }
+        br.close();
+    }
+
+
 }

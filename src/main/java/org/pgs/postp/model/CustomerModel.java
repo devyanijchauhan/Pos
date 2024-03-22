@@ -23,6 +23,9 @@ public class CustomerModel {
     @Column(name = "Phone")
     private BigInteger phone;
 
+    @Column(name = "Address")
+    private String address;
+
 //    @OneToMany(mappedBy = "id")
 //    private List<TransactionModel> transactions;
 
@@ -30,10 +33,11 @@ public class CustomerModel {
     public CustomerModel() {
     }
 
-    public CustomerModel(String name, String email, BigInteger phone) {
+    public CustomerModel(String name, String email, BigInteger phone, String address) {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.address = address;
     }
 
     // Getters and Setters
@@ -68,6 +72,13 @@ public class CustomerModel {
     public void setPhone(BigInteger phone) {
         this.phone = phone;
     }
+
+    public String getAddress() {return address;}
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
 //    public List<TransactionModel> getTransactions() {
 //        return transactions;

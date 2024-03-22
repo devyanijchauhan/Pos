@@ -20,6 +20,7 @@ public class ProductMapper {
         productDTO.setTotal(productModel.getTotal());
         productDTO.setStockQuantity(productModel.getStockQuantity());
         productDTO.setPurchasePrice(productModel.getPurchasePrice());
+        productDTO.setBarcodeNumber(productModel.getBarcodeNumber());
         productDTO.setSupplierIds(
                 productModel.getSuppliers().stream()
                         .map(supplier -> supplier.getSupplierID())
@@ -40,6 +41,7 @@ public class ProductMapper {
         productModel.setTotal(productDTO.getTotal());
         productModel.setStockQuantity(productDTO.getStockQuantity());
         productModel.setPurchasePrice(productDTO.getPurchasePrice());
+        productModel.setBarcodeNumber(productDTO.getBarcodeNumber());
         return productModel;
     }
 

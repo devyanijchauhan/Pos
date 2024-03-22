@@ -19,6 +19,7 @@ public class SupplierMapper {
         dto.setSupplierPhone(model.getSupplierPhone()); // Renamed from getPhone() to getSupplierPhone()
         dto.setContactPersonEmail(model.getContactPersonEmail());
         dto.setContactPersonPhone(model.getContactPersonPhone());
+        dto.setAddress(model.getAddress());
         return dto;
     }
 
@@ -32,6 +33,7 @@ public class SupplierMapper {
         model.setSupplierPhone(dto.getSupplierPhone()); // Renamed from setPhone() to setSupplierPhone()
         model.setContactPersonEmail(dto.getContactPersonEmail());
         model.setContactPersonPhone(dto.getContactPersonPhone());
+        model.setAddress(dto.getAddress());
         return model;
     }
 
@@ -47,6 +49,7 @@ public class SupplierMapper {
         supplierModel.setSupplierPhone(supplierDTO.getSupplierPhone()); // Renamed from setPhone() to setSupplierPhone()
         supplierModel.setContactPersonEmail(supplierDTO.getContactPersonEmail());
         supplierModel.setContactPersonPhone(supplierDTO.getContactPersonPhone());
+        supplierModel.setAddress(supplierDTO.getAddress());
         return supplierModel;
     }
 

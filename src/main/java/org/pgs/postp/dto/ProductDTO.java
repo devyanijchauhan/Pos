@@ -14,13 +14,16 @@ public class ProductDTO {
     private BigDecimal stockQuantity;
 
     private BigDecimal purchasePrice;
+
+    private String barcodeNumber;
+
     private List<Long> supplierIds;
 
     // Constructors
     public ProductDTO() {
     }
 
-    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, List<Long> supplierIds) {
+    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, String barcodeNumber, List<Long> supplierIds) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -29,6 +32,7 @@ public class ProductDTO {
         this.total = total;
         this.stockQuantity = stockQuantity;
         this.purchasePrice = purchasePrice;
+        this.barcodeNumber = barcodeNumber;
         this.supplierIds = supplierIds;
     }
 
@@ -95,6 +99,14 @@ public class ProductDTO {
 
     public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
+    }
+
+    public String getBarcodeNumber() {
+        return barcodeNumber;
+    }
+
+    public void setBarcodeNumber(String barcodeNumber) {
+        this.barcodeNumber = barcodeNumber;
     }
 
     public List<Long> getSupplierIds() {

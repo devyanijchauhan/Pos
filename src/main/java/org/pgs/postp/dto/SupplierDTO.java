@@ -12,12 +12,14 @@ public class SupplierDTO {
     private String contactPersonEmail;
     private BigInteger contactPersonPhone;
 
+    private String address;
+
     // Constructors
     public SupplierDTO() {
     }
 
     public SupplierDTO(Long supplierID, String supplierAgency, String contactPerson, String supplierEmail,
-                       BigInteger supplierPhone, String contactPersonEmail, BigInteger contactPersonPhone) {
+                       BigInteger supplierPhone, String contactPersonEmail, BigInteger contactPersonPhone, String address) {
         this.supplierID = supplierID;
         this.supplierAgency = supplierAgency;
         this.contactPerson = contactPerson;
@@ -25,6 +27,7 @@ public class SupplierDTO {
         this.supplierPhone = supplierPhone;
         this.contactPersonEmail = contactPersonEmail;
         this.contactPersonPhone = contactPersonPhone;
+        this.address = address;
     }
 
     // Getters and Setters
@@ -82,5 +85,13 @@ public class SupplierDTO {
 
     public void setContactPersonPhone(BigInteger contactPersonPhone) {
         this.contactPersonPhone = contactPersonPhone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
