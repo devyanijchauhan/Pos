@@ -26,16 +26,12 @@ import java.util.Random;
 
 public interface ProductService {
     List<ProductDTO> getAllProducts();
-
     ProductDTO getProductById(Long id);
-
+    ProductDTO getProductByBarcodeNumber(String barcodeNumber);
     ProductDTO createProduct(ProductDTO productDTO);
-
     ProductDTO updateProduct(Long id, ProductDTO productDTO);
     void processCSV(MultipartFile file) throws IOException,WriterException;
-
     void deleteProduct(Long id);
 
 }
-
 
