@@ -1,16 +1,22 @@
 package org.pgs.postp.dto;
 
+import java.util.Arrays;
+
 public class BarcodeDTO {
     private Long id;
     private String barcodeNumber;
+
+//    private byte[] barcodeImage;
 //    private Long productId;
 
     public BarcodeDTO() {
     }
 
-    public BarcodeDTO(Long id, String barcodeNumber, Long productId) {
+    public BarcodeDTO(Long id, String barcodeNumber) {
         this.id = id;
         this.barcodeNumber = barcodeNumber;
+//        this.barcodeImage = barcodeImage;
+
 //        this.productId = productId;
     }
 
@@ -30,6 +36,14 @@ public class BarcodeDTO {
         this.barcodeNumber = barcodeNumber;
     }
 
+//    public byte[] getBarcodeImage() {
+//        return barcodeImage;
+//    }
+//
+//    public void setBarcodeImage(byte[] barcodeImage) {
+//        this.barcodeImage = barcodeImage;
+//    }
+
 //    public Long getProductId() {
 //        return productId;
 //    }
@@ -43,6 +57,7 @@ public class BarcodeDTO {
         return "BarcodeDTO{" +
                 "id=" + id +
                 ", barcodeNumber='" + barcodeNumber + '\'' +
+//                ", barcodeImage=" + Arrays.toString(barcodeImage) +
 //                ", productId=" + productId +
                 '}';
     }

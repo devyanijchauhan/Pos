@@ -13,16 +13,6 @@ public class InvoiceModel {
     @Column(name = "InvoiceID")
     private Long invoiceID;
 
-    @ManyToOne
-    @JoinColumn(name = "SupplierID", nullable = false)
-    private SupplierModel supplier;
-
-    @Column(name = "TotalAmount", nullable = false)
-    private BigDecimal totalAmount;
-
-    @Column(name = "DueDate")
-    private LocalDate dueDate;
-
     @Column(name = "Status", nullable = false)
     private String status;
 
@@ -30,10 +20,7 @@ public class InvoiceModel {
     public InvoiceModel() {
     }
 
-    public InvoiceModel(SupplierModel supplier, BigDecimal totalAmount, LocalDate dueDate, String status) {
-        this.supplier = supplier;
-        this.totalAmount = totalAmount;
-        this.dueDate = dueDate;
+    public InvoiceModel(String status) {
         this.status = status;
     }
 
@@ -46,29 +33,6 @@ public class InvoiceModel {
         this.invoiceID = invoiceID;
     }
 
-    public SupplierModel getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(SupplierModel supplier) {
-        this.supplier = supplier;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
 
     public String getStatus() {
         return status;

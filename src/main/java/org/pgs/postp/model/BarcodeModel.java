@@ -2,6 +2,10 @@ package org.pgs.postp.model;
 
 import jakarta.persistence.*;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Entity
 @Table(name = "Barcodes")
 public class BarcodeModel {
@@ -18,6 +22,10 @@ public class BarcodeModel {
     @Column(name = "BarcodeNumber", unique = true, nullable = false)
     private String barcodeNumber;
 
+    // New field for barcode image
+//    @Column(name = "BarcodeImage", columnDefinition = "BYTEA")
+//    private byte[] barcodeImage;
+
     // Constructors
     public BarcodeModel() {
     }
@@ -26,6 +34,7 @@ public class BarcodeModel {
         this.barcodeID = barcodeID;
 //        this.product = product;
         this.barcodeNumber = barcodeNumber;
+//        this.barcodeImage = barcodeImage;
     }
 
     // Getters and Setters
@@ -52,4 +61,12 @@ public class BarcodeModel {
     public void setBarcodeNumber(String barcodeNumber) {
         this.barcodeNumber = barcodeNumber;
     }
+
+//    public byte[] getBarcodeImage() {
+//        return barcodeImage;
+//    }
+//
+//    public void setBarcodeImage(byte[] barcodeImage) {
+//        this.barcodeImage = barcodeImage;
+//    }
 }

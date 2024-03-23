@@ -46,6 +46,7 @@ public class BarcodeServiceImpl implements BarcodeService {
     @Override
     public BarcodeDTO createBarcode(BarcodeDTO barcodeDTO) {
         BarcodeModel barcode = barcodeMapper.toEntity(barcodeDTO);
+        
         BarcodeModel savedBarcode = barcodeRepository.save(barcode);
         return barcodeMapper.toDTO(savedBarcode);
     }
@@ -84,9 +85,12 @@ public class BarcodeServiceImpl implements BarcodeService {
             existingBarcode.setBarcodeNumber(barcodeDTO.getBarcodeNumber());
         }
 
+//        if(barcodeDTO.getBarcodeImage()!=null){
+//            existingBarcode.setBarcodeImage(barcodeDTO.getBarcodeImage());
+//        }
+
         // Save the updated BarcodeModel
         BarcodeModel updatedBarcode = barcodeRepository.save(existingBarcode);
-
         // Map the updated BarcodeModel to a BarcodeDTO and return it
         return barcodeMapper.toDTO(updatedBarcode);
     }
