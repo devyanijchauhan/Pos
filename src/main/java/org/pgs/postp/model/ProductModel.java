@@ -49,8 +49,6 @@ public class ProductModel {
     )
     private List<SupplierModel> suppliers;
 
-    @OneToMany(mappedBy = "product")
-    private List<TransactionDetailModel> transactionDetails;
 
     // Constructors
     public ProductModel() {
@@ -156,14 +154,6 @@ public class ProductModel {
 
     public void setSuppliers(List<SupplierModel> suppliers) {
         this.suppliers = suppliers;
-    }
-
-    public List<TransactionDetailModel> getTransactionDetails() {
-        return transactionDetails;
-    }
-
-    public void setTransactionDetails(List<TransactionDetailModel> transactionDetails) {
-        this.transactionDetails = transactionDetails;
     }
 
 }
