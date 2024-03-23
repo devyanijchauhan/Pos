@@ -4,9 +4,7 @@ package org.pgs.postp.service.Impl;
 import org.pgs.postp.dto.InvoiceDTO;
 import org.pgs.postp.mapper.InvoiceMapper;
 import org.pgs.postp.model.InvoiceModel;
-import org.pgs.postp.model.SupplierModel;
 import org.pgs.postp.repository.InvoiceRepository;
-import org.pgs.postp.repository.SupplierRepository;
 import org.pgs.postp.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +18,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final InvoiceMapper invoiceMapper;
 
-    private final SupplierRepository supplierRepository;
 
     @Autowired
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, SupplierRepository supplierRepository) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceMapper = invoiceMapper;
-        this.supplierRepository = supplierRepository;
     }
 
     @Override
@@ -44,56 +40,76 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoice);
     }
 
-//    @Override
-//    public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
-//        InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
-//        InvoiceModel savedInvoice = invoiceRepository.save(invoice);
-//        return invoiceMapper.toDTO(savedInvoice);
-//   }
-
     @Override
     public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
-        if (invoiceDTO.getSupplierId() == null) {
-            throw new IllegalArgumentException("Supplier must be provided");
-        }
-
-        // Fetch the supplier from the database
-        SupplierModel supplier = supplierRepository.findById(invoiceDTO.getSupplierId())
-                .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + invoiceDTO.getSupplierId()));
-
-        // Create the InvoiceModel entity and set the supplier
-        InvoiceModel invoice = new InvoiceModel(
-                supplier,
-                invoiceDTO.getTotalAmount(),
-                invoiceDTO.getDueDate(),
-                invoiceDTO.getStatus());
-
-        // Save the invoice to the database
+        InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
+        calculateTotalPrice(invoice);
         InvoiceModel savedInvoice = invoiceRepository.save(invoice);
         return invoiceMapper.toDTO(savedInvoice);
-    }
-
+   }
 
     @Override
     public InvoiceDTO updateInvoice(Long id, InvoiceDTO invoiceDTO) {
         InvoiceModel existingInvoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Invoice not found with id: " + id));
 
-        if(invoiceDTO.getTotalAmount()!=null){
-            existingInvoice.setTotalAmount(invoiceDTO.getTotalAmount());
+        if (invoiceDTO.getDateTime() != null) {
+            existingInvoice.setDateTime(invoiceDTO.getDateTime());
         }
-
-        if(invoiceDTO.getDueDate()!=null){
-            existingInvoice.setDueDate(invoiceDTO.getDueDate());
+        if (invoiceDTO.getProducts() != null) {
+            existingInvoice.setProducts(invoiceDTO.getProducts());
+        }
+        if (invoiceDTO.getPaymentMethod() != null) {
+            existingInvoice.setPaymentMethod(invoiceDTO.getPaymentMethod());
+        }
+        if (invoiceDTO.getBarcodeID() != null) {
+            existingInvoice.setBarcodeID(invoiceDTO.getBarcodeID());
+        }
+        if (invoiceDTO.getBarcodeNumbers() != null) {
+            existingInvoice.setBarcodeNumbers(invoiceDTO.getBarcodeNumbers());
+        }
+        if (invoiceDTO.getCustomerName() != null) {
+            existingInvoice.setCustomerName(invoiceDTO.getCustomerName());
+        }
+        if (invoiceDTO.getCustomerPhone() != null) {
+            existingInvoice.setCustomerPhone(invoiceDTO.getCustomerPhone());
+        }
+        if (invoiceDTO.getVoucher() != null) {
+            existingInvoice.setVoucher(invoiceDTO.getVoucher());
+        }
+        if (invoiceDTO.getTotalMRP() != null) {
+            existingInvoice.setTotalMRP(invoiceDTO.getTotalMRP());
+        }
+        if (invoiceDTO.getTotalTax() != null) {
+            existingInvoice.setTotalTax(invoiceDTO.getTotalTax());
+        }
+        if (invoiceDTO.getTotalDiscount() != null) {
+            existingInvoice.setTotalDiscount(invoiceDTO.getTotalDiscount());
+        }
+        if (invoiceDTO.getTotalPrice() != null) {
+            existingInvoice.setTotalPrice(invoiceDTO.getTotalPrice());
         }
 
         if(invoiceDTO.getStatus()!=null){
             existingInvoice.setStatus(invoiceDTO.getStatus());
         }
 
+        // Calculate total price
+        calculateTotalPrice(existingInvoice);
+
         // Update properties here
         InvoiceModel updatedInvoice = invoiceRepository.save(existingInvoice);
         return invoiceMapper.toDTO(updatedInvoice);
+    }
+
+    private void calculateTotalPrice(InvoiceModel invoice) {
+        long totalMRP = invoice.getTotalMRP() != null ? invoice.getTotalMRP() : 0;
+        long totalTax = invoice.getTotalTax() != null ? invoice.getTotalTax() : 0;
+        long totalDiscount = invoice.getTotalDiscount() != null ? invoice.getTotalDiscount() : 0;
+
+        // Calculate total price
+        long totalPrice = totalMRP + totalTax - totalDiscount;
+        invoice.setTotalPrice(totalPrice);
     }
 
     @Override
