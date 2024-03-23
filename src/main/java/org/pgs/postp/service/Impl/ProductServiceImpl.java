@@ -74,6 +74,18 @@ public class ProductServiceImpl implements ProductService {
                         .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + supplierId)))
                 .collect(Collectors.toList());
 
+        // Generate unique barcode number
+        String barcodeNumber = generateUniqueBarcodeNumber();
+
+        // Generate barcode image
+        byte[] barcodeImageBytes;
+        try {
+            barcodeImageBytes = generateBarcodeImage(barcodeNumber, 200, 50);
+        } catch (WriterException | IOException e) {
+            throw new RuntimeException("Error generating barcode image", e);
+        }
+
+
         // Create the ProductModel entity and set the suppliers
         ProductModel product = new ProductModel(
                 productDTO.getName(),
@@ -83,13 +95,40 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getTotal(),
                 productDTO.getStockQuantity(),
                 productDTO.getPurchasePrice(),
-                productDTO.getBarcodeNumber(),
-                productDTO.getBarcodeImage(),
+                barcodeNumber,
+                barcodeImageBytes, // Updated to use the generated barcode image byte array
                 suppliers);
 
         // Save the product to the database
         ProductModel savedProduct = productRepository.save(product);
         return productMapper.toDTO(savedProduct);
+    }
+    // Helper method to generate a unique barcode number
+    private String generateUniqueBarcodeNumber() {
+        String barcodeNumber;
+        boolean unique = false;
+        do {
+            barcodeNumber = generateBarcodeNumber(); // Generate a random barcode number
+            // Check if the generated barcode number already exists in the database
+            if (!productRepository.findByBarcodeNumber(barcodeNumber).isPresent()) {
+                unique = true; // Set unique to true if the barcode number is not found in the database
+            }
+        } while (!unique);
+
+        return barcodeNumber;
+    }
+
+
+    private byte[] generateBarcodeImage(String barcodeText, int width, int height) throws WriterException, IOException {
+        // Set barcode parameters
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.MARGIN, 0); // Set margin to 0
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(barcodeText, BarcodeFormat.CODE_128, width, height, hints);
+
+        // Convert bitMatrix to byte array
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+        return outputStream.toByteArray();
     }
 
     @Override
@@ -125,12 +164,12 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setPurchasePrice(productDTO.getPurchasePrice());
         }
 
-        if (productDTO.getBarcodeNumber() != null) {
-            existingProduct.setBarcodeNumber(productDTO.getBarcodeNumber());
-        }
-        if (productDTO.getBarcodeImage() != null) {
-            existingProduct.setBarcodeImage(productDTO.getBarcodeImage());
-        }
+//        if (productDTO.getBarcodeNumber() != null) {
+//            existingProduct.setBarcodeNumber(productDTO.getBarcodeNumber());
+//        }
+//        if (productDTO.getBarcodeImage() != null) {
+//            existingProduct.setBarcodeImage(productDTO.getBarcodeImage());
+//        }
 
         // Update properties here
         ProductModel updatedProduct = productRepository.save(existingProduct);
