@@ -34,9 +34,6 @@ public class ProductModel {
     @Column(name = "PurchasePrice", nullable = false)
     private BigDecimal purchasePrice;
 
-    @Column(name = "WholesalePrice", nullable = false)
-    private BigDecimal wholesalePrice;
-
     @Column(name = "BarcodeNumber", unique = true, nullable = false)
     private String barcodeNumber;
 
@@ -59,7 +56,7 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, BigDecimal wholesalePrice, String barcodeNumber, byte[] barcodeImage, List<SupplierModel> suppliers) {
+    public ProductModel(String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, String barcodeNumber, byte[] barcodeImage, List<SupplierModel> suppliers) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -67,7 +64,6 @@ public class ProductModel {
         this.total = total;
         this.stockQuantity = stockQuantity;
         this.purchasePrice = purchasePrice;
-        this.wholesalePrice = wholesalePrice;
         this.barcodeNumber = barcodeNumber;
         this.barcodeImage = barcodeImage;
         this.suppliers = suppliers;
@@ -136,14 +132,6 @@ public class ProductModel {
 
     public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
-    }
-
-    public BigDecimal getWholesalePrice() {
-        return wholesalePrice;
-    }
-
-    public void setWholesalePrice(BigDecimal wholesalePrice) {
-        this.wholesalePrice = wholesalePrice;
     }
 
     public String getBarcodeNumber() {

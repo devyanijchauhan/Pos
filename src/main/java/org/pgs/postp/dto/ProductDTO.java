@@ -13,7 +13,6 @@ public class ProductDTO {
     private BigDecimal total;
     private BigDecimal stockQuantity;
     private BigDecimal purchasePrice;
-    private BigDecimal wholesalePrice;
     private String barcodeNumber;
     private byte[] barcodeImage;
     private List<Long> supplierIds;
@@ -22,7 +21,7 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, BigDecimal wholesalePrice,String barcodeNumber, byte[] barcodeImage, List<Long> supplierIds) {
+    public ProductDTO(Long productId, String name, String description, BigDecimal price, BigDecimal tax, BigDecimal total, BigDecimal stockQuantity, BigDecimal purchasePrice, String barcodeNumber, byte[] barcodeImage, List<Long> supplierIds) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -31,7 +30,6 @@ public class ProductDTO {
         this.total = total;
         this.stockQuantity = stockQuantity;
         this.purchasePrice = purchasePrice;
-        this.wholesalePrice = wholesalePrice;
         this.barcodeNumber = barcodeNumber;
         this.barcodeImage = barcodeImage;
         this.supplierIds = supplierIds;
@@ -100,14 +98,6 @@ public class ProductDTO {
 
     public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
-    }
-
-    public BigDecimal getWholesalePrice() {
-        return wholesalePrice;
-    }
-
-    public void setWholesalePrice(BigDecimal wholesalePrice) {
-        this.wholesalePrice = wholesalePrice;
     }
 
     public String getBarcodeNumber() {

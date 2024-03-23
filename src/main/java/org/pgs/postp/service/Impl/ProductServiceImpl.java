@@ -83,7 +83,6 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getTotal(),
                 productDTO.getStockQuantity(),
                 productDTO.getPurchasePrice(),
-                productDTO.getWholesalePrice(),
                 productDTO.getBarcodeNumber(),
                 productDTO.getBarcodeImage(),
                 suppliers);
@@ -126,9 +125,6 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setPurchasePrice(productDTO.getPurchasePrice());
         }
 
-        if (productDTO.getWholesalePrice() != null) {
-            existingProduct.setWholesalePrice(productDTO.getWholesalePrice());
-        }
         if (productDTO.getBarcodeNumber() != null) {
             existingProduct.setBarcodeNumber(productDTO.getBarcodeNumber());
         }
@@ -166,7 +162,6 @@ public class ProductServiceImpl implements ProductService {
             BigDecimal total = new BigDecimal(data[4].trim());
             BigDecimal stockQuantity = new BigDecimal(data[5].trim());
             BigDecimal purchasePrice = new BigDecimal(data[6].trim());
-            BigDecimal wholesalePrice = new BigDecimal(data[7].trim());
             String barcodeNumber = generateBarcodeNumber();
 
             ProductModel product = new ProductModel();
@@ -177,7 +172,6 @@ public class ProductServiceImpl implements ProductService {
             product.setTotal(total);
             product.setStockQuantity(stockQuantity);
             product.setPurchasePrice(purchasePrice);
-            product.setWholesalePrice(wholesalePrice);
             product.setBarcodeNumber(barcodeNumber);
             product.setBarcodeImage(generateBarcode(barcodeNumber, 200, 50));
             productRepository.save(product);
