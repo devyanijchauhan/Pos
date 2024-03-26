@@ -8,6 +8,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import org.pgs.postp.dto.ProductDTO;
 import org.pgs.postp.mapper.ProductMapper;
+import org.pgs.postp.model.InvoiceModel;
 import org.pgs.postp.model.ProductModel;
 import org.pgs.postp.model.SupplierModel;
 import org.pgs.postp.repository.ProductRepository;
@@ -98,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
                 barcodeNumber,
                 barcodeImageBytes, // Updated to use the generated barcode image byte array
                 suppliers);
-
+        calculatePrice(product);
         // Save the product to the database
         ProductModel savedProduct = productRepository.save(product);
         return productMapper.toDTO(savedProduct);
@@ -171,10 +172,24 @@ public class ProductServiceImpl implements ProductService {
 //            existingProduct.setBarcodeImage(productDTO.getBarcodeImage());
 //        }
 
+        // Calculate total price
+        calculatePrice(existingProduct);
+
         // Update properties here
         ProductModel updatedProduct = productRepository.save(existingProduct);
         return productMapper.toDTO(updatedProduct);
     }
+
+    private void calculatePrice(ProductModel product) {
+        BigDecimal price = product.getPrice() != null ? product.getPrice() : BigDecimal.ZERO;
+        BigDecimal tax = product.getTax() != null ? product.getTax() : BigDecimal.ZERO;
+
+
+        // Calculate total price
+        BigDecimal total = price.add(tax);
+        product.setTotal(total);
+    }
+
 
     @Override
     public void deleteProduct(Long id) {
