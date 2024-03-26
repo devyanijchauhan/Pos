@@ -105,13 +105,13 @@ public class CustomerServiceImpl implements CustomerService {
     public void processCSV(MultipartFile file) throws IOException {
         // Check CSV file headers
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-        String headerLine = br.readLine();
-        if (headerLine == null || !headerLine.equals("Name, Email, Phone,  Address")) {
-            throw new IllegalArgumentException("Invalid CSV file format or headers");
-        }
+//        String headerLine = br.readLine();
+//        if (headerLine == null || !headerLine.equals("Name, Email, Phone, Address")) {
+//            throw new IllegalArgumentException("Invalid CSV file format or headers");
+//        }
 
-//        // Skip the header line
-//        br.readLine();
+        // Skip the header line
+        br.readLine();
 
 
         String line;
