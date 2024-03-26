@@ -58,6 +58,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
+
+        // Check if email already exists
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+        // Check if phone already exists
+        if (userRepository.existsByPhone(userDTO.getPhone())) {
+            throw new IllegalArgumentException("Phone number already exists");
+        }
+
+
         if (userDTO.getRoleId() == null) {
             throw new IllegalArgumentException("Role ID must be provided");
         }
@@ -70,6 +82,9 @@ public class UserServiceImpl implements UserService {
         UserModel user = new UserModel(
                 userDTO.getUsername(),
                 userDTO.getPassword(),
+                userDTO.getName(),
+                userDTO.getEmail(),
+                userDTO.getPhone(),
                 role);
 
         // Save the user to the database
@@ -77,12 +92,20 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDTO(savedUser);
     }
 
-
-
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         UserModel existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        if(userDTO.getName()!=null){
+            existingUser.setName(userDTO.getName());
+        }
+        if(userDTO.getEmail()!=null){
+            existingUser.setEmail(userDTO.getEmail());
+        }
+        if(userDTO.getPhone()!=null){
+            existingUser.setPhone(userDTO.getPhone());
+        }
 
         existingUser.setUsername(userDTO.getUsername());
         existingUser.setPassword(userDTO.getPassword());

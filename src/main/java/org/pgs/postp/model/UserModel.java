@@ -2,6 +2,8 @@ package org.pgs.postp.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
+
 @Entity
 @Table(name = "Users")
 public class UserModel {
@@ -17,6 +19,15 @@ public class UserModel {
     @Column(name = "Password", nullable = false)
     private String password;
 
+    @Column(name = "Name", nullable = false)
+    private String name;
+
+    @Column(name = "Email")
+    private String email;
+
+    @Column(name = "Phone")
+    private BigInteger phone;
+
     @ManyToOne
     @JoinColumn(name = "RoleID", nullable = false, referencedColumnName = "RoleID")
     private RoleModel role;
@@ -25,9 +36,12 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String username, String password, RoleModel role) {
+    public UserModel(String username, String password, String name, String email, BigInteger phone, RoleModel role) {
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
         this.role = role;
     }
 
@@ -55,6 +69,18 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getName() {return name;}
+
+    public void setName(String name) {this.name = name;}
+
+    public String getEmail() {return email;}
+
+    public void setEmail(String email) {this.email = email;}
+
+    public BigInteger getPhone() {return phone;}
+
+    public void setPhone(BigInteger phone) {this.phone = phone;}
 
     public RoleModel getRole() {
         return role;
