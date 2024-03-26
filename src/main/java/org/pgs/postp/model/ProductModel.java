@@ -47,8 +47,8 @@ public class ProductModel {
             joinColumns = @JoinColumn(name = "ProductID"),
             inverseJoinColumns = @JoinColumn(name = "SupplierID")
     )
-    private List<SupplierModel> suppliers;
 
+    private List<SupplierModel> suppliers;
 
     // Constructors
     public ProductModel() {
