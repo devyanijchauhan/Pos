@@ -68,7 +68,7 @@ public class CustomerDTO {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address=" + address + '\''+
+                ", address='" + address + '\'' +
                 '}';
     }
 }
