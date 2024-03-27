@@ -16,6 +16,7 @@ import org.pgs.postp.repository.SupplierRepository;
 import org.pgs.postp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -62,6 +63,19 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found with barcode number: " + barcodeNumber));
         return productMapper.toDTO(product);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProductsBySupplierId(Long supplierId) {
+        // Fetch the products by supplier ID using the repository method
+        List<ProductModel> products = productRepository.findBySupplierId(supplierId);
+
+        // Map the found product entities to DTOs
+        return products.stream()
+                .map(ProductMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {

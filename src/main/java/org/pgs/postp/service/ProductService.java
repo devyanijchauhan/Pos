@@ -26,6 +26,8 @@ import java.util.Random;
 
 public interface ProductService {
     List<ProductDTO> getAllProducts();
+    List<ProductDTO> getProductsBySupplierId(Long supplierId);
+
     ProductDTO getProductById(Long id);
     ProductDTO getProductByBarcodeNumber(String barcodeNumber);
     ProductDTO createProduct(ProductDTO productDTO);
