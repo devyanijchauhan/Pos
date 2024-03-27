@@ -250,24 +250,23 @@ public class ProductServiceImpl implements ProductService {
             String[] supplierIds = data[7].trim().split("\\s+");
             List<SupplierModel> supplierModels = new ArrayList<>();
             for(var supId: supplierIds) {
-                var suppModel = supplierRepository.findById(Long.parseLong(supId)).orElse(null);
-                if (suppModel != null) {
-                    supplierModels.add(suppModel);
-                }
-            }
-            // Validate and parse supplier IDs
-            for (String supId : supplierIds) {
+//                var suppModel = supplierRepository.findById(Long.parseLong(supId)).orElse(null);
+//                if (suppModel != null) {
+//                    supplierModels.add(suppModel);
+//                }
                 try {
                     long supplierId = Long.parseLong(supId.trim());
-                    SupplierModel suppModel = supplierRepository.findById(supplierId).orElse(null);
+                    SupplierModel suppModel = supplierRepository.findById(supplierId)
+                            .orElse(null);
                     if (suppModel != null) {
                         supplierModels.add(suppModel);
+                    } else {
+                        // If a supplier with the given ID is not found, throw an exception
+                        throw new IllegalArgumentException("Supplier not found with id: " + supplierId);
                     }
                 } catch (NumberFormatException e) {
-                    // Handle non-numeric supplier ID
-                    // You can throw an exception or handle it according to your application's logic
-                    // For example, you could log the error and skip adding this supplier
-                    System.err.println("Invalid supplier ID: " + supId);
+                    // If the supplier ID cannot be parsed as a long value, throw an exception
+                    throw new IllegalArgumentException("Invalid supplier ID: " + supId);
                 }
             }
 
