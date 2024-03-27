@@ -223,6 +223,29 @@ public class ProductServiceImpl implements ProductService {
             BigDecimal stockQuantity = new BigDecimal(data[5].trim());
             BigDecimal purchasePrice = new BigDecimal(data[6].trim());
             String barcodeNumber = generateBarcodeNumber();
+            String[] supplierIds = data[7].trim().split("\\s+");
+            List<SupplierModel> supplierModels = new ArrayList<>();
+            for(var supId: supplierIds) {
+                var suppModel = supplierRepository.findById(Long.parseLong(supId)).orElse(null);
+                if (suppModel != null) {
+                    supplierModels.add(suppModel);
+                }
+            }
+            // Validate and parse supplier IDs
+            for (String supId : supplierIds) {
+                try {
+                    long supplierId = Long.parseLong(supId.trim());
+                    SupplierModel suppModel = supplierRepository.findById(supplierId).orElse(null);
+                    if (suppModel != null) {
+                        supplierModels.add(suppModel);
+                    }
+                } catch (NumberFormatException e) {
+                    // Handle non-numeric supplier ID
+                    // You can throw an exception or handle it according to your application's logic
+                    // For example, you could log the error and skip adding this supplier
+                    System.err.println("Invalid supplier ID: " + supId);
+                }
+            }
 
             ProductModel product = new ProductModel();
             product.setName(name);
@@ -234,6 +257,7 @@ public class ProductServiceImpl implements ProductService {
             product.setPurchasePrice(purchasePrice);
             product.setBarcodeNumber(barcodeNumber);
             product.setBarcodeImage(generateBarcode(barcodeNumber, 200, 50));
+            product.setSuppliers(supplierModels);
             productRepository.save(product);
         }
         br.close();
