@@ -56,28 +56,6 @@ public class ProductController {
         return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
 
-    @GetMapping("/barcode-number/{barcodeNumber}")
-    public ResponseEntity<ProductDTO> getProductByBarcodeNumber(@PathVariable("barcodeNumber") String barcodeNumber) {
-        ProductDTO productDTO = productService.getProductByBarcodeNumber(barcodeNumber);
-        if (productDTO != null) {
-            return new ResponseEntity<>(productDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/product-barcode/{id}")
-    public ResponseEntity<byte[]> getBarcode(@PathVariable String id) {
-
-        try {
-            byte[] barcodeBytes = productServiceImpl.generateBarcode(id, 200, 50); // Adjust width and height as needed
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(barcodeBytes);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-
     @GetMapping("/supplier/{supplierId}")
     public ResponseEntity<List<ProductDTO>> getProductsBySupplierId(@PathVariable("supplierId") Long supplierId) {
         List<ProductDTO> products = productService.getProductsBySupplierId(supplierId);
@@ -88,6 +66,15 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/barcode/{barcodeNumber}")
+    public ResponseEntity<List<ProductDTO>> getProductsByBarcodeNumber(@PathVariable("barcodeNumber") String barcodeNumber) {
+        List<ProductDTO> products = productService.getProductsByBarcodeNumber(barcodeNumber);
+        if (!products.isEmpty()) {
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {

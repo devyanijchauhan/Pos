@@ -76,6 +76,16 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductDTO> getProductsByBarcodeNumber(String barcodeNumber) {
+        Optional<ProductModel> products = productRepository.findByBarcodeNumber(barcodeNumber);
+        return products.stream()
+                .map(ProductMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {

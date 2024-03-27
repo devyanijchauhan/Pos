@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<ProductModel, Long> {
     // You can add custom query methods here if needed
 //
-    Optional<ProductModel> findByBarcodeNumber(String barcodeNumber);
 
     @Query("SELECT p FROM ProductModel p JOIN p.suppliers s WHERE s.supplierID = :supplierId")
     List<ProductModel> findBySupplierId(Long supplierId);
 
+    Optional<ProductModel> findByBarcodeNumber(String barcodeNumber);
 
 }
