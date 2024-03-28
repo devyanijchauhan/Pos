@@ -28,15 +28,14 @@ public class UserModel {
     @Column(name = "Phone")
     private BigInteger phone;
 
-    @ManyToOne
-    @JoinColumn(name = "RoleID", nullable = false, referencedColumnName = "RoleID")
-    private RoleModel role;
+    @Column(name = "Role", nullable = false)
+    private String role; // Changed to String datatype
 
     // Constructors
     public UserModel() {
     }
 
-    public UserModel(String username, String password, String name, String email, BigInteger phone, RoleModel role) {
+    public UserModel(String username, String password, String name, String email, BigInteger phone, String role) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -82,11 +81,7 @@ public class UserModel {
 
     public void setPhone(BigInteger phone) {this.phone = phone;}
 
-    public RoleModel getRole() {
-        return role;
-    }
+    public String getRole() {return role;}
 
-    public void setRole(RoleModel role) {
-        this.role = role;
-    }
+    public void setRole(String role) {this.role = role;}
 }

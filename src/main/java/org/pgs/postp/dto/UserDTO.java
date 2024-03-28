@@ -9,19 +9,19 @@ public class UserDTO {
     private String name;
     private String email;
     private BigInteger phone;
-    private Long roleId;
+    private String role;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long userID, String username, String password, String name, String email, BigInteger phone, Long roleId) {
+    public UserDTO(Long userID, String username, String password, String name, String email, BigInteger phone, String role) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.roleId = roleId;
+        this.role = role;
     }
 
     public Long getUserID() {
@@ -72,13 +72,9 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public Long getRoleId() {
-        return roleId;
-    }
+    public String getRole() {return role;}
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
+    public void setRole(String role) {this.role = role;}
 
     @Override
     public String toString() {
@@ -89,7 +85,7 @@ public class UserDTO {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", roleId=" + roleId +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
