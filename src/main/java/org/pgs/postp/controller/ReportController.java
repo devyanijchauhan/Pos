@@ -290,7 +290,7 @@ public class ReportController {
         if (totalPriceForMonth == null || totalPriceForMonth == 0) {
             // Return a custom error message with status code 404
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No entry found for the specified monthhhh");
+                    .body("No entry found for the specified month");
         }
         // Return the total price if records are found
         return ResponseEntity.ok(totalPriceForMonth);
