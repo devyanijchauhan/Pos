@@ -25,9 +25,6 @@ public class InvoiceModel {
     @Column(name = "PaymentMethod")
     private String paymentMethod;
 
-    @Column(name = "BarcodeID", nullable = false)
-    private String barcodeID;
-
     @ElementCollection
     @CollectionTable(name = "Invoice_BarcodeNumbers", joinColumns = @JoinColumn(name = "InvoiceID"))
     @Column(name = "BarcodeNumber")
@@ -61,13 +58,11 @@ public class InvoiceModel {
     public InvoiceModel() {
     }
 
-    public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, String barcodeID,
-                        List<String> barcodeNumbers, String customerName, String customerPhone, String voucher,
+    public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone, String voucher,
                         Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status) {
         this.dateTime = dateTime;
         this.products = products;
         this.paymentMethod = paymentMethod;
-        this.barcodeID = barcodeID;
         this.barcodeNumbers = barcodeNumbers;
         this.customerName = customerName;
         this.customerPhone = customerPhone;
@@ -111,15 +106,6 @@ public class InvoiceModel {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-
-    public String getBarcodeID() {
-        return barcodeID;
-    }
-
-    public void setBarcodeID(String barcodeID) {
-        this.barcodeID = barcodeID;
-    }
-
     public List<String> getBarcodeNumbers() {
         return barcodeNumbers;
     }

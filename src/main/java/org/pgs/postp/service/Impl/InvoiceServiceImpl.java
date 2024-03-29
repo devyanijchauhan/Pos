@@ -69,9 +69,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         if (invoiceDTO.getPaymentMethod() != null) {
             existingInvoice.setPaymentMethod(invoiceDTO.getPaymentMethod());
         }
-        if (invoiceDTO.getBarcodeID() != null) {
-            existingInvoice.setBarcodeID(invoiceDTO.getBarcodeID());
-        }
         if (invoiceDTO.getBarcodeNumbers() != null) {
             existingInvoice.setBarcodeNumbers(invoiceDTO.getBarcodeNumbers());
         }

@@ -11,7 +11,6 @@ public class InvoiceDTO {
     private LocalDateTime dateTime;
     private List<String> products;
     private String paymentMethod;
-    private String barcodeID;
     private List<String> barcodeNumbers;
     private String customerName;
     private String customerPhone;
@@ -26,14 +25,12 @@ public class InvoiceDTO {
     public InvoiceDTO() {
     }
 
-    public InvoiceDTO(Long invoiceID, LocalDateTime dateTime, List<String> products, String paymentMethod,
-                      String barcodeID, List<String> barcodeNumbers, String customerName, String customerPhone,
+    public InvoiceDTO(Long invoiceID, LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone,
                       String voucher, Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status) {
         this.invoiceID = invoiceID;
         this.dateTime = dateTime;
         this.products = products;
         this.paymentMethod = paymentMethod;
-        this.barcodeID = barcodeID;
         this.barcodeNumbers = barcodeNumbers;
         this.customerName = customerName;
         this.customerPhone = customerPhone;
@@ -76,14 +73,6 @@ public class InvoiceDTO {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
-    }
-
-    public String getBarcodeID() {
-        return barcodeID;
-    }
-
-    public void setBarcodeID(String barcodeID) {
-        this.barcodeID = barcodeID;
     }
 
     public List<String> getBarcodeNumbers() {

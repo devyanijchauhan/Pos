@@ -16,7 +16,6 @@ public class InvoiceMapper {
         invoiceDTO.setDateTime(invoiceModel.getDateTime());
         invoiceDTO.setProducts(invoiceModel.getProducts());
         invoiceDTO.setPaymentMethod(invoiceModel.getPaymentMethod());
-        invoiceDTO.setBarcodeID(invoiceModel.getBarcodeID());
         invoiceDTO.setBarcodeNumbers(invoiceModel.getBarcodeNumbers());
         invoiceDTO.setCustomerName(invoiceModel.getCustomerName());
         invoiceDTO.setCustomerPhone(invoiceModel.getCustomerPhone());
@@ -38,7 +37,6 @@ public class InvoiceMapper {
         invoiceModel.setDateTime(invoiceDTO.getDateTime());
         invoiceModel.setProducts(invoiceDTO.getProducts());
         invoiceModel.setPaymentMethod(invoiceDTO.getPaymentMethod());
-        invoiceModel.setBarcodeID(invoiceDTO.getBarcodeID());
         invoiceModel.setBarcodeNumbers(invoiceDTO.getBarcodeNumbers());
         invoiceModel.setCustomerName(invoiceDTO.getCustomerName());
         invoiceModel.setCustomerPhone(invoiceDTO.getCustomerPhone());
