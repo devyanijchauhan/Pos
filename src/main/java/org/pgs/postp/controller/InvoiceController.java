@@ -1,12 +1,15 @@
 package org.pgs.postp.controller;
 
 import org.pgs.postp.dto.InvoiceDTO;
+import org.pgs.postp.model.InvoiceModel;
 import org.pgs.postp.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 @RestController
@@ -38,7 +41,6 @@ public class InvoiceController {
         List<InvoiceDTO> invoiceDTOs = invoiceService.getAllInvoices();
         return new ResponseEntity<>(invoiceDTOs, HttpStatus.OK);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<InvoiceDTO> updateInvoice(@PathVariable("id") Long id, @RequestBody InvoiceDTO invoiceDTO) {
         invoiceDTO.setInvoiceID(id);

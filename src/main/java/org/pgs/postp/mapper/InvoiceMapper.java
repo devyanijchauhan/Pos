@@ -50,4 +50,5 @@ public class InvoiceMapper {
         invoiceModel.setStatus(invoiceDTO.getStatus());
         return invoiceModel;
     }
+
 }

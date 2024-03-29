@@ -91,4 +91,13 @@ public class VoucherServiceImpl implements VoucherService {
         }
         voucherRepository.deleteById(id);
     }
+
+    // Implementation of the getVoucherCount() method
+    @Override
+    public long getVoucherCount() {
+        // Your implementation to retrieve voucher count from the database
+        return voucherRepository.count();
+    }
+
+
 }

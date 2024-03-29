@@ -97,4 +97,12 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.deleteById(id);
     }
+
+    // Implementation of the getUserCount() method
+    @Override
+    public long getUserCount() {
+        // Your implementation to retrieve user count from the database
+        return userRepository.count();
+    }
+
 }

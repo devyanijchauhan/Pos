@@ -57,7 +57,6 @@ public class InvoiceModel {
     @Column(name = "Status", nullable = false)
     private String status;
 
-
     // Constructors
     public InvoiceModel() {
     }
