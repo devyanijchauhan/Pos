@@ -15,7 +15,21 @@ public class InvoiceReturnMapper {
         dto.setInvoiceID(model.getInvoice().getInvoiceID()); // Assuming you have a method to get invoice ID from InvoiceModel
         dto.setReturnDate(model.getReturnDate());
         dto.setReturnReason(model.getReturnReason());
-        dto.setRefundAmount(model.getRefundAmount());
+
+        // Set fields from associated invoice
+        InvoiceModel invoice = model.getInvoice();
+        dto.setInvoiceDateTime(invoice.getDateTime());
+        dto.setInvoiceProducts(invoice.getProducts());
+        dto.setInvoicePaymentMethod(invoice.getPaymentMethod());
+        dto.setInvoiceBarcodeNumbers(invoice.getBarcodeNumbers());
+        dto.setInvoiceCustomerName(invoice.getCustomerName());
+        dto.setInvoiceCustomerPhone(invoice.getCustomerPhone());
+        dto.setInvoiceVoucher(invoice.getVoucher());
+        dto.setInvoiceTotalMRP(invoice.getTotalMRP());
+        dto.setInvoiceTotalTax(invoice.getTotalTax());
+        dto.setInvoiceTotalDiscount(invoice.getTotalDiscount());
+        dto.setInvoiceTotalPrice(invoice.getTotalPrice());
+        dto.setInvoiceStatus(invoice.getStatus());
         return dto;
     }
 
@@ -28,7 +42,6 @@ public class InvoiceReturnMapper {
         // Set InvoiceModel
         model.setReturnDate(dto.getReturnDate());
         model.setReturnReason(dto.getReturnReason());
-        model.setRefundAmount(dto.getRefundAmount());
         return model;
     }
 
@@ -45,6 +58,7 @@ public class InvoiceReturnMapper {
             invoiceReturnModel.setInvoice(invoice);
         }
         invoiceReturnModel.setReturnDate(invoiceReturnDTO.getReturnDate());
+        invoiceReturnModel.setReturnReason(invoiceReturnDTO.getReturnReason());
         // You can map other fields here if needed
         return invoiceReturnModel;
     }

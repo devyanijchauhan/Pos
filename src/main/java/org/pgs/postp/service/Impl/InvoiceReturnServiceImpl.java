@@ -3,6 +3,7 @@ package org.pgs.postp.service.Impl;
 
 import org.pgs.postp.dto.InvoiceReturnDTO;
 import org.pgs.postp.mapper.InvoiceReturnMapper;
+import org.pgs.postp.model.InvoiceModel;
 import org.pgs.postp.model.InvoiceReturnModel;
 import org.pgs.postp.repository.InvoiceReturnRepository;
 import org.pgs.postp.service.InvoiceReturnService;
@@ -51,6 +52,68 @@ public class InvoiceReturnServiceImpl implements InvoiceReturnService {
         InvoiceReturnModel existingInvoiceReturn = invoiceReturnRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Invoice return not found with id: " + id));
         // Update properties here
+
+        if (invoiceReturnDTO.getReturnDate() != null) {
+            existingInvoiceReturn.setReturnDate(invoiceReturnDTO.getReturnDate());
+        }
+
+        if (invoiceReturnDTO.getReturnReason() != null) {
+            existingInvoiceReturn.setReturnReason(invoiceReturnDTO.getReturnReason());
+        }
+
+        // Update properties related to the associated invoice
+        InvoiceModel invoice = existingInvoiceReturn.getInvoice();
+        if (invoiceReturnDTO.getInvoiceID() != null) {
+            invoice.setInvoiceID(invoiceReturnDTO.getInvoiceID());
+        }
+        if (invoiceReturnDTO.getInvoiceDateTime() != null) {
+            invoice.setDateTime(invoiceReturnDTO.getInvoiceDateTime());
+        }
+
+        if (invoiceReturnDTO.getInvoiceProducts() != null) {
+            invoice.setProducts(invoiceReturnDTO.getInvoiceProducts());
+        }
+
+        if (invoiceReturnDTO.getInvoicePaymentMethod() != null) {
+            invoice.setPaymentMethod(invoiceReturnDTO.getInvoicePaymentMethod());
+        }
+
+        if (invoiceReturnDTO.getInvoiceBarcodeNumbers() != null) {
+            invoice.setBarcodeNumbers(invoiceReturnDTO.getInvoiceBarcodeNumbers());
+        }
+
+        if (invoiceReturnDTO.getInvoiceCustomerName() != null) {
+            invoice.setCustomerName(invoiceReturnDTO.getInvoiceCustomerName());
+        }
+
+        if (invoiceReturnDTO.getInvoiceCustomerPhone() != null) {
+            invoice.setCustomerPhone(invoiceReturnDTO.getInvoiceCustomerPhone());
+        }
+
+        if (invoiceReturnDTO.getInvoiceVoucher() != null) {
+            invoice.setVoucher(invoiceReturnDTO.getInvoiceVoucher());
+        }
+
+        if (invoiceReturnDTO.getInvoiceTotalMRP() != null) {
+            invoice.setTotalMRP(invoiceReturnDTO.getInvoiceTotalMRP());
+        }
+
+        if (invoiceReturnDTO.getInvoiceTotalTax() != null) {
+            invoice.setTotalTax(invoiceReturnDTO.getInvoiceTotalTax());
+        }
+
+        if (invoiceReturnDTO.getInvoiceTotalDiscount() != null) {
+            invoice.setTotalDiscount(invoiceReturnDTO.getInvoiceTotalDiscount());
+        }
+
+        if (invoiceReturnDTO.getInvoiceTotalPrice() != null) {
+            invoice.setTotalPrice(invoiceReturnDTO.getInvoiceTotalPrice());
+        }
+
+        if (invoiceReturnDTO.getInvoiceStatus() != null) {
+            invoice.setStatus(invoiceReturnDTO.getInvoiceStatus());
+        }
+
         InvoiceReturnModel updatedInvoiceReturn = invoiceReturnRepository.save(existingInvoiceReturn);
         return invoiceReturnMapper.toDTO(updatedInvoiceReturn);
     }
