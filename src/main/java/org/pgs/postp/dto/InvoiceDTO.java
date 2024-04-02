@@ -21,12 +21,14 @@ public class InvoiceDTO {
     private Long totalPrice;
     private String status;
 
+    private List<String> cartData;
+
     // Constructors
     public InvoiceDTO() {
     }
 
     public InvoiceDTO(Long invoiceID, LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone,
-                      String voucher, Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status) {
+                      String voucher, Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<String> cartData) {
         this.invoiceID = invoiceID;
         this.dateTime = dateTime;
         this.products = products;
@@ -40,6 +42,7 @@ public class InvoiceDTO {
         this.totalDiscount = totalDiscount;
         this.totalPrice = totalPrice;
         this.status = status;
+        this.cartData = cartData;
     }
 
     // Getters and Setters
@@ -146,4 +149,9 @@ public class InvoiceDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public List<String> getCartData() {return cartData;}
+
+    public void setCartData(List<String> cartData) {this.cartData = cartData;}
+
 }

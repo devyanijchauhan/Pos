@@ -54,12 +54,17 @@ public class InvoiceModel {
     @Column(name = "Status", nullable = false)
     private String status;
 
+    @ElementCollection
+    @CollectionTable(name = "Invoice_CartData", joinColumns = @JoinColumn(name = "InvoiceID"))
+    @Column(name = "CartData")
+    private List<String> cartData = new ArrayList<>();
+
     // Constructors
     public InvoiceModel() {
     }
 
     public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone, String voucher,
-                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status) {
+                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<String> cartData) {
         this.dateTime = dateTime;
         this.products = products;
         this.paymentMethod = paymentMethod;
@@ -72,6 +77,7 @@ public class InvoiceModel {
         this.totalDiscount = totalDiscount;
         this.totalPrice = totalPrice;
         this.status = status;
+        this.cartData = cartData;
     }
 
     // Getters and Setters
@@ -106,6 +112,7 @@ public class InvoiceModel {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
     public List<String> getBarcodeNumbers() {
         return barcodeNumbers;
     }
@@ -178,5 +185,8 @@ public class InvoiceModel {
         this.status = status;
     }
 
+    public List<String> getCartData() {return cartData;}
+
+    public void setCartData(List<String> cartData) {this.cartData = cartData;}
 
 }

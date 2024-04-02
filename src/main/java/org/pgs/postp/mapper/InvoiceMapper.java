@@ -25,6 +25,7 @@ public class InvoiceMapper {
         invoiceDTO.setTotalDiscount(invoiceModel.getTotalDiscount());
         invoiceDTO.setTotalPrice(invoiceModel.getTotalPrice());
         invoiceDTO.setStatus(invoiceModel.getStatus());
+        invoiceDTO.setCartData(invoiceModel.getCartData());
         return invoiceDTO;
     }
 
@@ -46,6 +47,7 @@ public class InvoiceMapper {
         invoiceModel.setTotalDiscount(invoiceDTO.getTotalDiscount());
         invoiceModel.setTotalPrice(invoiceDTO.getTotalPrice());
         invoiceModel.setStatus(invoiceDTO.getStatus());
+        invoiceModel.setCartData(invoiceDTO.getCartData());
         return invoiceModel;
     }
 

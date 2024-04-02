@@ -98,6 +98,10 @@ public class InvoiceServiceImpl implements InvoiceService {
             existingInvoice.setStatus(invoiceDTO.getStatus());
         }
 
+        if (invoiceDTO.getCartData() != null) {
+            existingInvoice.setCartData(invoiceDTO.getCartData());
+        }
+
         // Calculate total price
         calculateTotalPrice(existingInvoice);
 
