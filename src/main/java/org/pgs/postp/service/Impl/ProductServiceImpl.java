@@ -132,7 +132,7 @@ public class ProductServiceImpl implements ProductService {
         boolean unique = false;
         do {
 
-            barcodeNumber = "P" + generateBarcodeNumber(); // Generate a random barcode number
+            barcodeNumber = generateBarcodeNumber(); // Generate a random barcode number
             // Check if the generated barcode number already exists in the database
             if (!productRepository.findByBarcodeNumber(barcodeNumber).isPresent()) {
                 unique = true; // Set unique to true if the barcode number is not found in the database
