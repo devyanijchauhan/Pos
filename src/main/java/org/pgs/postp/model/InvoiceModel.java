@@ -57,14 +57,14 @@ public class InvoiceModel {
     @ElementCollection
     @CollectionTable(name = "Invoice_CartData", joinColumns = @JoinColumn(name = "InvoiceID"))
     @Column(name = "CartData")
-    private List<String> cartData = new ArrayList<>();
+    private List<Object> cartData = new ArrayList<>();
 
     // Constructors
     public InvoiceModel() {
     }
 
     public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone, String voucher,
-                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<String> cartData) {
+                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<Object> cartData) {
         this.dateTime = dateTime;
         this.products = products;
         this.paymentMethod = paymentMethod;
@@ -185,8 +185,8 @@ public class InvoiceModel {
         this.status = status;
     }
 
-    public List<String> getCartData() {return cartData;}
+    public List<Object> getCartData() {return cartData;}
 
-    public void setCartData(List<String> cartData) {this.cartData = cartData;}
+    public void setCartData(List<Object> cartData) {this.cartData = cartData;}
 
 }
