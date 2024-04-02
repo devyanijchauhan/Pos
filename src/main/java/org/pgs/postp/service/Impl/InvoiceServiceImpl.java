@@ -3,7 +3,9 @@ package org.pgs.postp.service.Impl;
 
 import org.pgs.postp.dto.InvoiceDTO;
 import org.pgs.postp.mapper.InvoiceMapper;
+import org.pgs.postp.model.Cart;
 import org.pgs.postp.model.InvoiceModel;
+import org.pgs.postp.repository.CartRepository;
 import org.pgs.postp.repository.InvoiceRepository;
 import org.pgs.postp.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +27,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final InvoiceMapper invoiceMapper;
 
+    private final CartRepository cartRepository;
 
     @Autowired
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, CartRepository cartRepository) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceMapper = invoiceMapper;
+        this.cartRepository = cartRepository;
     }
 
     @Override
@@ -50,7 +54,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
         InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
+        Cart cart =invoiceDTO.getCartData();
+        Cart savedCart = cartRepository.save(cart);
         calculateTotalPrice(invoice);
+        invoice.setCartData(savedCart);
         InvoiceModel savedInvoice = invoiceRepository.save(invoice);
         return invoiceMapper.toDTO(savedInvoice);
     }

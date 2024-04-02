@@ -56,6 +56,4 @@ public interface InvoiceService {
 
     // Get total price for invoices created in a particular month
     Long getTotalPriceForMonth(int year, int month);
-
-
 }

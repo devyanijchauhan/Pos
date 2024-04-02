@@ -1,5 +1,6 @@
 package org.pgs.postp.dto;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class InvoiceReturnDTO {
     private String invoicePaymentMethod;
     private List<String> invoiceBarcodeNumbers;
     private String invoiceCustomerName;
-    private String invoiceCustomerPhone;
+    private BigInteger invoiceCustomerPhone;
     private String invoiceVoucher;
     private Long invoiceTotalMRP;
     private Long invoiceTotalTax;
@@ -27,7 +28,8 @@ public class InvoiceReturnDTO {
     }
 
     public InvoiceReturnDTO(Long returnID, Long invoiceId, LocalDateTime invoiceDateTime, List<String> invoiceProducts, String invoicePaymentMethod,
-                            List<String> invoiceBarcodeNumbers, String invoiceCustomerName, String invoiceCustomerPhone,
+                            List<String> invoiceBarcodeNumbers,
+                            String invoiceCustomerName, BigInteger invoiceCustomerPhone,
                             String invoiceVoucher, Long invoiceTotalMRP, Long invoiceTotalTax, Long invoiceTotalDiscount,
                             Long invoiceTotalPrice, String invoiceStatus, LocalDateTime returnDate, String returnReason) {
         this.returnID = returnID;
@@ -105,11 +107,11 @@ public class InvoiceReturnDTO {
         this.invoiceCustomerName = invoiceCustomerName;
     }
 
-    public String getInvoiceCustomerPhone() {
+    public BigInteger getInvoiceCustomerPhone() {
         return invoiceCustomerPhone;
     }
 
-    public void setInvoiceCustomerPhone(String invoiceCustomerPhone) {
+    public void setInvoiceCustomerPhone(BigInteger invoiceCustomerPhone) {
         this.invoiceCustomerPhone = invoiceCustomerPhone;
     }
 

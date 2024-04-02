@@ -1,8 +1,15 @@
 package org.pgs.postp.model;
 
+
 import jakarta.persistence.*;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import org.pgs.postp.model.Cart;
+
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -34,7 +41,7 @@ public class InvoiceModel {
     private String customerName;
 
     @Column(name = "CustomerPhone")
-    private String customerPhone;
+    private BigInteger customerPhone;
 
     @Column(name = "Voucher")
     private String voucher;
@@ -54,17 +61,16 @@ public class InvoiceModel {
     @Column(name = "Status", nullable = false)
     private String status;
 
-    @ElementCollection
-    @CollectionTable(name = "Invoice_CartData", joinColumns = @JoinColumn(name = "InvoiceID"))
-    @Column(name = "CartData")
-    private List<Object> cartData = new ArrayList<>();
+    @OneToOne()
+    @JoinColumn(name = "id")
+    private Cart cartData;
 
     // Constructors
     public InvoiceModel() {
     }
 
-    public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone, String voucher,
-                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<Object> cartData) {
+    public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, BigInteger customerPhone, String voucher,
+                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, Cart cartData) {
         this.dateTime = dateTime;
         this.products = products;
         this.paymentMethod = paymentMethod;
@@ -129,11 +135,11 @@ public class InvoiceModel {
         this.customerName = customerName;
     }
 
-    public String getCustomerPhone() {
+    public BigInteger getCustomerPhone() {
         return customerPhone;
     }
 
-    public void setCustomerPhone(String customerPhone) {
+    public void setCustomerPhone(BigInteger customerPhone) {
         this.customerPhone = customerPhone;
     }
 
@@ -185,8 +191,8 @@ public class InvoiceModel {
         this.status = status;
     }
 
-    public List<Object> getCartData() {return cartData;}
+    public Cart getCartData() {return cartData;}
 
-    public void setCartData(List<Object> cartData) {this.cartData = cartData;}
+    public void setCartData(Cart cartData) {this.cartData = cartData;}
 
 }

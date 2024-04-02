@@ -2,6 +2,7 @@ package org.pgs.postp.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,44 +22,44 @@ public class InvoiceReturnModel {
 
     // Fields from InvoiceModel
     @Column(name = "DateTime", nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDateTime invoiceDateTime;
 
     @ElementCollection
     @CollectionTable(name = "Invoice_Products", joinColumns = @JoinColumn(name = "ReturnID"))
     @Column(name = "Product")
-    private List<String> products = new ArrayList<>();
+    private List<String> invoiceProducts = new ArrayList<>();
 
     @Column(name = "PaymentMethod")
-    private String paymentMethod;
+    private String invoicePaymentMethod;
 
     @ElementCollection
     @CollectionTable(name = "Invoice_BarcodeNumbers", joinColumns = @JoinColumn(name = "ReturnID"))
     @Column(name = "BarcodeNumber")
-    private List<String> barcodeNumbers = new ArrayList<>();
+    private List<String> invoiceBarcodeNumbers = new ArrayList<>();
 
     @Column(name = "CustomerName")
-    private String customerName;
+    private String invoiceCustomerName;
 
     @Column(name = "CustomerPhone")
-    private String customerPhone;
+    private BigInteger invoiceCustomerPhone;
 
     @Column(name = "Voucher")
-    private String voucher;
+    private String invoiceVoucher;
 
     @Column(name = "TotalMRP")
-    private Long totalMRP;
+    private Long invoiceTotalMRP;
 
-    @Column(name = "TotalTax")
-    private Long totalTax;
+    @Column(name = "InvoiceTotalTax")
+    private Long invoiceTotalTax;
 
     @Column(name = "TotalDiscount")
-    private Long totalDiscount;
+    private Long invoiceTotalDiscount;
 
     @Column(name = "TotalPrice")
-    private Long totalPrice;
+    private Long invoiceTotalPrice;
 
     @Column(name = "Status", nullable = false)
-    private String status;
+    private String invoiceStatus;
 
 
     @Column(name = "ReturnDate", nullable = false)
@@ -72,21 +73,24 @@ public class InvoiceReturnModel {
     public InvoiceReturnModel() {
     }
 
-    public InvoiceReturnModel(InvoiceModel invoice, LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone, String voucher,
-                              Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, LocalDateTime returnDate, String returnReason) {
+    public InvoiceReturnModel(InvoiceModel invoice, LocalDateTime invoiceDateTime,  List<String> invoiceProducts, String invoicePaymentMethod,
+                              List<String> invoiceBarcodeNumbers,
+                              String invoiceCustomerName, BigInteger invoiceCustomerPhone,
+                              String invoiceVoucher, Long invoiceTotalMRP, Long invoiceTotalTax, Long invoiceTotalDiscount,
+                              Long invoiceTotalPrice, String invoiceStatus,  LocalDateTime returnDate, String returnReason) {
         this.invoice = invoice;
-        this.dateTime = invoice.getDateTime();
-        this.products = invoice.getProducts();
-        this.paymentMethod = invoice.getPaymentMethod();
-        this.barcodeNumbers = invoice.getBarcodeNumbers();
-        this.customerName = invoice.getCustomerName();
-        this.customerPhone = invoice.getCustomerPhone();
-        this.voucher = invoice.getVoucher();
-        this.totalMRP = invoice.getTotalMRP();
-        this.totalTax = invoice.getTotalTax();
-        this.totalDiscount = invoice.getTotalDiscount();
-        this.totalPrice = invoice.getTotalPrice();
-        this.status = invoice.getStatus();
+        this.invoiceDateTime = invoice.getDateTime();
+        this.invoiceProducts = invoice.getProducts();
+        this.invoicePaymentMethod = invoice.getPaymentMethod();
+        this.invoiceBarcodeNumbers = invoice.getBarcodeNumbers();
+        this.invoiceCustomerName = invoice.getCustomerName();
+        this.invoiceCustomerPhone = invoice.getCustomerPhone();
+        this.invoiceVoucher  = invoice.getVoucher();
+        this.invoiceTotalMRP = invoice.getTotalMRP();
+        this.invoiceTotalTax = invoice.getTotalTax();
+        this.invoiceTotalDiscount = invoice.getTotalDiscount();
+        this.invoiceTotalPrice = invoice.getTotalPrice();
+        this.invoiceStatus = invoice.getStatus();
         this.returnDate = returnDate;
         this.returnReason = returnReason;
     }
@@ -110,53 +114,101 @@ public class InvoiceReturnModel {
 
     // Getters and setters for fields from InvoiceModel
 
-    public LocalDateTime getDateTime() {return dateTime;}
+    public LocalDateTime getInvoiceDateTime() {
+        return invoiceDateTime;
+    }
 
-    public void setDateTime(LocalDateTime dateTime) {this.dateTime = dateTime;}
+    public void setInvoiceDateTime(LocalDateTime invoiceDateTime) {
+        this.invoiceDateTime = invoiceDateTime;
+    }
 
-    public List<String> getProducts() {return products;}
+    public List<String> getInvoiceProducts() {
+        return invoiceProducts;
+    }
 
-    public void setProducts(List<String> products) {this.products = products;}
+    public void setInvoiceProducts(List<String> invoiceProducts) {
+        this.invoiceProducts = invoiceProducts;
+    }
 
-    public String getPaymentMethod() {return paymentMethod;}
+    public String getInvoicePaymentMethod() {
+        return invoicePaymentMethod;
+    }
 
-    public void setPaymentMethod(String paymentMethod) {this.paymentMethod = paymentMethod;}
+    public void setInvoicePaymentMethod(String invoicePaymentMethod) {
+        this.invoicePaymentMethod = invoicePaymentMethod;
+    }
 
-    public List<String> getBarcodeNumbers() {return barcodeNumbers;}
+    public List<String> getInvoiceBarcodeNumbers() {
+        return invoiceBarcodeNumbers;
+    }
 
-    public void setBarcodeNumbers(List<String> barcodeNumbers) {this.barcodeNumbers = barcodeNumbers;}
+    public void setInvoiceBarcodeNumbers(List<String> invoiceBarcodeNumbers) {
+        this.invoiceBarcodeNumbers = invoiceBarcodeNumbers;
+    }
 
-    public String getCustomerName() {return customerName;}
+    public String getInvoiceCustomerName() {
+        return invoiceCustomerName;
+    }
 
-    public void setCustomerName(String customerName) {this.customerName = customerName;}
+    public void setInvoiceCustomerName(String invoiceCustomerName) {
+        this.invoiceCustomerName = invoiceCustomerName;
+    }
 
-    public String getCustomerPhone() {return customerPhone;}
+    public BigInteger getInvoiceCustomerPhone() {
+        return invoiceCustomerPhone;
+    }
 
-    public void setCustomerPhone(String customerPhone) {this.customerPhone = customerPhone;}
+    public void setInvoiceCustomerPhone(BigInteger invoiceCustomerPhone) {
+        this.invoiceCustomerPhone = invoiceCustomerPhone;
+    }
 
-    public String getVoucher() {return voucher;}
+    public String getInvoiceVoucher() {
+        return invoiceVoucher;
+    }
 
-    public void setVoucher(String voucher) {this.voucher = voucher;}
+    public void setInvoiceVoucher(String invoiceVoucher) {
+        this.invoiceVoucher = invoiceVoucher;
+    }
 
-    public Long getTotalMRP() {return totalMRP;}
+    public Long getInvoiceTotalMRP() {
+        return invoiceTotalMRP;
+    }
 
-    public void setTotalMRP(Long totalMRP) {this.totalMRP = totalMRP;}
+    public void setInvoiceTotalMRP(Long invoiceTotalMRP) {
+        this.invoiceTotalMRP = invoiceTotalMRP;
+    }
 
-    public Long getTotalTax() {return totalTax;}
+    public Long getInvoiceTotalTax() {
+        return invoiceTotalTax;
+    }
 
-    public void setTotalTax(Long totalTax) {this.totalTax = totalTax;}
+    public void setInvoiceTotalTax(Long invoiceTotalTax) {
+        this.invoiceTotalTax = invoiceTotalTax;
+    }
 
-    public Long getTotalDiscount() {return totalDiscount;}
+    public Long getInvoiceTotalDiscount() {
+        return invoiceTotalDiscount;
+    }
 
-    public void setTotalDiscount(Long totalDiscount) {this.totalDiscount = totalDiscount;}
+    public void setInvoiceTotalDiscount(Long invoiceTotalDiscount) {
+        this.invoiceTotalDiscount = invoiceTotalDiscount;
+    }
 
-    public Long getTotalPrice() {return totalPrice;}
+    public Long getInvoiceTotalPrice() {
+        return invoiceTotalPrice;
+    }
 
-    public void setTotalPrice(Long totalPrice) {this.totalPrice = totalPrice;}
+    public void setInvoiceTotalPrice(Long invoiceTotalPrice) {
+        this.invoiceTotalPrice = invoiceTotalPrice;
+    }
 
-    public String getStatus() {return status;}
+    public String getInvoiceStatus() {
+        return invoiceStatus;
+    }
 
-    public void setStatus(String status) {this.status = status;}
+    public void setInvoiceStatus(String invoiceStatus) {
+        this.invoiceStatus = invoiceStatus;
+    }
 
     public LocalDateTime getReturnDate() {return returnDate;}
 

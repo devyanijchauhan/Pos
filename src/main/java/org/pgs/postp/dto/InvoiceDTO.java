@@ -1,7 +1,9 @@
 package org.pgs.postp.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import org.pgs.postp.model.Cart;
+
+
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class InvoiceDTO {
     private String paymentMethod;
     private List<String> barcodeNumbers;
     private String customerName;
-    private String customerPhone;
+    private BigInteger customerPhone;
     private String voucher;
     private Long totalMRP;
     private Long totalTax;
@@ -21,14 +23,16 @@ public class InvoiceDTO {
     private Long totalPrice;
     private String status;
 
-    private List<Object> cartData;
+    private Cart cartData;
 
     // Constructors
     public InvoiceDTO() {
     }
 
-    public InvoiceDTO(Long invoiceID, LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, String customerPhone,
-                      String voucher, Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<Object> cartData) {
+    public InvoiceDTO(Long invoiceID, LocalDateTime dateTime, List<String> products, String paymentMethod,
+                      List<String> barcodeNumbers,
+                      String customerName, BigInteger customerPhone,
+                      String voucher, Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, Cart cartData) {
         this.invoiceID = invoiceID;
         this.dateTime = dateTime;
         this.products = products;
@@ -94,11 +98,11 @@ public class InvoiceDTO {
         this.customerName = customerName;
     }
 
-    public String getCustomerPhone() {
+    public BigInteger getCustomerPhone() {
         return customerPhone;
     }
 
-    public void setCustomerPhone(String customerPhone) {
+    public void setCustomerPhone(BigInteger customerPhone) {
         this.customerPhone = customerPhone;
     }
 
@@ -150,8 +154,8 @@ public class InvoiceDTO {
         this.status = status;
     }
 
-    public List<Object> getCartData() {return cartData;}
+    public Cart getCartData() {return cartData;}
 
-    public void setCartData(List<Object> cartData) {this.cartData = cartData;}
+    public void setCartData(Cart cartData) {this.cartData = cartData;}
 
 }

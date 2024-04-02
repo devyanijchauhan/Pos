@@ -10,6 +10,7 @@ import org.pgs.postp.service.InvoiceReturnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,20 @@ public class InvoiceReturnServiceImpl implements InvoiceReturnService {
     public InvoiceReturnDTO createInvoiceReturn(InvoiceReturnDTO invoiceReturnDTO) {
         InvoiceReturnModel invoiceReturn = invoiceReturnMapper.toEntity(invoiceReturnDTO);
         InvoiceReturnModel savedInvoiceReturn = invoiceReturnRepository.save(invoiceReturn);
+        // Create a new instance of InvoiceReturnModel
+        InvoiceReturnModel invoiceReturnModel = new InvoiceReturnModel();
+
+        // Populate InvoiceReturnModel with data from InvoiceReturnDTO
+        if (invoiceReturnDTO.getInvoiceDateTime() != null) {
+            invoiceReturnModel.setInvoiceDateTime(invoiceReturnDTO.getInvoiceDateTime());
+        } else {
+            // Set invoiceDateTime to the current date and time
+            invoiceReturnModel.setInvoiceDateTime(LocalDateTime.now());
+        }
+        // Populate other properties similarly...
+
+        // Save the InvoiceReturnModel instance
+        invoiceReturnRepository.save(invoiceReturnModel);
         return invoiceReturnMapper.toDTO(savedInvoiceReturn);
     }
 

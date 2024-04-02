@@ -14,4 +14,5 @@ public interface InvoiceReturnService {
     InvoiceReturnDTO updateInvoiceReturn(Long id, InvoiceReturnDTO invoiceReturnDTO);
 
     void deleteInvoiceReturn(Long id);
+
 }
