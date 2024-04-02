@@ -85,8 +85,6 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-
-
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
         if (productDTO.getSupplierIds() == null || productDTO.getSupplierIds().isEmpty()) {
@@ -133,7 +131,8 @@ public class ProductServiceImpl implements ProductService {
         String barcodeNumber;
         boolean unique = false;
         do {
-            barcodeNumber = generateBarcodeNumber(); // Generate a random barcode number
+
+            barcodeNumber = "P" + generateBarcodeNumber(); // Generate a random barcode number
             // Check if the generated barcode number already exists in the database
             if (!productRepository.findByBarcodeNumber(barcodeNumber).isPresent()) {
                 unique = true; // Set unique to true if the barcode number is not found in the database
@@ -286,19 +285,12 @@ public class ProductServiceImpl implements ProductService {
         br.close();
     }
 
-    //          try {
-//        byte[] barcodeBytes = barcodeServiceImpl.generateBarcode(text, 200, 50); // Adjust width and height as needed
-//        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(barcodeBytes);
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//    }
     private String generateBarcodeNumber() {
         // Generate random barcode (you can implement your own logic)
         Random random = new Random();
         StringBuilder barcode = new StringBuilder();
-        for (int i = 0; i < 6; i++) {
-            barcode.append(random.nextInt(6));
+        for (int i = 0; i < 5; i++) {
+            barcode.append(random.nextInt(5));
         }
         return barcode.toString();
     }
