@@ -288,7 +288,7 @@ public class ProductServiceImpl implements ProductService {
     private String generateBarcodeNumber() {
         // Generate random barcode (you can implement your own logic)
         Random random = new Random();
-        StringBuilder barcode = new StringBuilder();
+        StringBuilder barcode = new StringBuilder("P");
         for (int i = 0; i < 5; i++) {
             barcode.append(random.nextInt(5));
         }
