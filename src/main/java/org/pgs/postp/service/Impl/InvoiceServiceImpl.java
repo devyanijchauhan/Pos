@@ -26,7 +26,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
     private final InvoiceMapper invoiceMapper;
-
     private final CartRepository cartRepository;
 
     @Autowired
@@ -51,16 +50,23 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoice);
     }
 
-    @Override
-    public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
-        InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
-        Cart cart =invoiceDTO.getCartData();
-        Cart savedCart = cartRepository.save(cart);
-        calculateTotalPrice(invoice);
-        invoice.setCartData(savedCart);
-        InvoiceModel savedInvoice = invoiceRepository.save(invoice);
-        return invoiceMapper.toDTO(savedInvoice);
-    }
+//    @Override
+//    public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
+//        InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
+//        Cart cart =invoiceDTO.getCartData();
+//        Cart savedCart = cartRepository.save(cart);
+//        calculateTotalPrice(invoice);
+//        invoice.setCartData(savedCart);
+//        InvoiceModel savedInvoice = invoiceRepository.save(invoice);
+//        return invoiceMapper.toDTO(savedInvoice);
+//    }
+@Override
+public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
+    InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
+    calculateTotalPrice(invoice);
+    InvoiceModel savedInvoice = invoiceRepository.save(invoice);
+    return invoiceMapper.toDTO(savedInvoice);
+}
 
     @Override
     public InvoiceDTO updateInvoice(Long id, InvoiceDTO invoiceDTO) {

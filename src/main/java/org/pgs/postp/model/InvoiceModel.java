@@ -61,16 +61,16 @@ public class InvoiceModel {
     @Column(name = "Status", nullable = false)
     private String status;
 
-    @OneToOne()
-    @JoinColumn(name = "id")
-    private Cart cartData;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "invoice_id")
+    private List<Cart> cartData;
 
     // Constructors
     public InvoiceModel() {
     }
 
     public InvoiceModel(LocalDateTime dateTime, List<String> products, String paymentMethod, List<String> barcodeNumbers, String customerName, BigInteger customerPhone, String voucher,
-                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, Cart cartData) {
+                        Long totalMRP, Long totalTax, Long totalDiscount, Long totalPrice, String status, List<Cart> cartData) {
         this.dateTime = dateTime;
         this.products = products;
         this.paymentMethod = paymentMethod;
@@ -191,8 +191,8 @@ public class InvoiceModel {
         this.status = status;
     }
 
-    public Cart getCartData() {return cartData;}
+    public List<Cart> getCartData() {return cartData;}
 
-    public void setCartData(Cart cartData) {this.cartData = cartData;}
+    public void setCartData(List<Cart> cartData) {this.cartData = cartData;}
 
 }
