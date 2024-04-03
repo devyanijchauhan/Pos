@@ -59,7 +59,9 @@ public class SupplierController {
     public ResponseEntity<String> uploadCSVFile(@RequestParam("file") MultipartFile file) {
         try {
             supplierService.processCSV(file);
-            return ResponseEntity.status(HttpStatus.OK).body("CSV processed successfully");
+            return ResponseEntity.status(HttpStatus.OK).body("CSV processed successfully. Data added successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CSV processing failed: Invalid content - " + e.getMessage());
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process CSV: " + e.getMessage());
         }
