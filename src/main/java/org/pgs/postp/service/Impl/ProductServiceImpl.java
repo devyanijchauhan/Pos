@@ -245,7 +245,8 @@ public class ProductServiceImpl implements ProductService {
             BigDecimal total = new BigDecimal(data[4].trim());
             BigDecimal stockQuantity = new BigDecimal(data[5].trim());
             BigDecimal purchasePrice = new BigDecimal(data[6].trim());
-            String barcodeNumber = generateBarcodeNumber();
+
+            String barcodeNumber = generateUniqueBarcodeNumber();
             String[] supplierIds = data[7].trim().split("\\s+");
             List<SupplierModel> supplierModels = new ArrayList<>();
             for(var supId: supplierIds) {
