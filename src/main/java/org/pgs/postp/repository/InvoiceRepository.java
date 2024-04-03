@@ -25,31 +25,33 @@ public interface InvoiceRepository extends JpaRepository<InvoiceModel, Long> {
     Long getTotalPrice();
 
     //for week
-    @Query("SELECT COUNT(i) FROM InvoiceModel i WHERE i.dateTime BETWEEN ?1 AND ?2")
-    int countByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endDate);
+    // Count invoices created between start and end date (inclusive)
+    @Query("SELECT COUNT(i) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
+    int countByCreatedAtBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
+    // Custom query method to get total MRP of invoices created within the current week
     @Query("SELECT COALESCE(SUM(i.totalMRP), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalMRPForWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalMRPForCurrentWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalTax), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalTaxForWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalTaxForCurrentWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalDiscount), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalDiscountForWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalDiscountForCurrentWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalPrice), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalPriceForWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalPriceForCurrentWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalMRP), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalMRPForMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalMRPForCurrentMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalTax), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalTaxForMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalTaxForCurrentMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalDiscount), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalDiscountForMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalDiscountForCurrentMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COALESCE(SUM(i.totalPrice), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
-    Long getTotalPriceForMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    Long getTotalPriceForCurrentMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
 }

@@ -33,27 +33,27 @@ public interface InvoiceService {
     int getTotalInvoicesCreatedThisWeek();
 
     //particular week
-    int getTotalInvoicesCreatedInWeek(LocalDateTime startDate, LocalDateTime endDate);
+    int getTotalInvoicesCreatedInCurrentWeek();
 
     // For a particular month
-    int getTotalInvoicesCreatedInMonth(LocalDateTime startDate, LocalDateTime endDate);
+    int getTotalInvoicesCreatedInCurrentMonth();
 
-    Long getTotalMRPForWeek(LocalDateTime startDate, LocalDateTime endDate);
+    Long getTotalMRPForCurrentWeek();
 
-    Long getTotalTaxForWeek(LocalDateTime startDate, LocalDateTime endDate);
+    Long getTotalTaxForCurrentWeek();
 
-    Long getTotalDiscountForWeek(LocalDateTime startDate, LocalDateTime endDate);
+    Long getTotalDiscountForCurrentWeek();
 
-    Long getTotalPriceForWeek(LocalDateTime startDate, LocalDateTime endDate);
+    Long getTotalPriceForCurrentWeek();
 
-    Long getTotalMRPForMonth(int year, int month);
+    Long getTotalMRPForCurrentMonth();
 
     // Get total tax for invoices created in a particular month
-    Long getTotalTaxForMonth(int year, int month);
+    Long getTotalTaxForCurrentMonth();
 
     // Get total discount for invoices created in a particular month
-    Long getTotalDiscountForMonth(int year, int month);
+    Long getTotalDiscountForCurrentMonth();
 
     // Get total price for invoices created in a particular month
-    Long getTotalPriceForMonth(int year, int month);
+    Long getTotalPriceForCurrentMonth();
 }

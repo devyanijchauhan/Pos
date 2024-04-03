@@ -12,16 +12,14 @@ public class ReportMapper {
     // Convert ReportModel to ReportDTO
     public ReportDTO toDTO(ReportModel model) {
         ReportDTO dto = new ReportDTO();
-        dto.setReportID(model.getReportID());
-        dto.setTotalUsers(model.getTotalUsers());
+//        dto.setReportID(model.getReportID());
         return dto;
     }
 
     public ReportModel toEntity(ReportDTO reportDTO) {
 
         ReportModel reportModel = new ReportModel();
-        reportModel.setReportID(reportDTO.getReportID());
-        reportModel.setTotalUsers(reportDTO.getTotalUsers());
+//        reportModel.setReportID(reportDTO.getReportID());
         return reportModel;
     }
 }
