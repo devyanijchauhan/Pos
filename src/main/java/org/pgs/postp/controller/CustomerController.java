@@ -24,11 +24,30 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
+    // Custom response class for success and error cases
+    static class Response<T> {
+        private final String message;
+        private final T data;
 
-        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+        public Response(String message, T data) {
+            this.message = message;
+            this.data = data;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public T getData() {
+            return data;
+        }
+    }
+
+
+    @PostMapping
+    public ResponseEntity<Response<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDTO) {
+        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
+        return new ResponseEntity<>(new Response<>("Customer created successfully", createdCustomer), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -57,14 +76,14 @@ public class CustomerController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadCSVFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Response<String>> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             customerService.processCSV(file);
-            return ResponseEntity.status(HttpStatus.OK).body("CSV processed successfully. Data added successfully.");
+            return new ResponseEntity<>(new Response<>("CSV processed successfully. Data added successfully.",""), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CSV processing failed: Invalid content - " + e.getMessage());
+            return new ResponseEntity<>(new Response<>("CSV processing failed: Invalid content", e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (IOException | WriterException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process CSV: " + e.getMessage());
+            return new ResponseEntity<>(new Response<>("Failed to process CSV", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

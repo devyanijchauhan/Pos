@@ -24,10 +24,30 @@ public class SupplierController {
         this.supplierService = supplierService;
     }
 
+    // Custom response class for success and error cases
+    static class Response<T> {
+        private final String message;
+        private final T data;
+
+        public Response(String message, T data) {
+            this.message = message;
+            this.data = data;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public T getData() {
+            return data;
+        }
+    }
+
+
     @PostMapping
-    public ResponseEntity<SupplierDTO> createSupplier(@RequestBody SupplierDTO supplierDTO) {
+    public ResponseEntity<Response<SupplierDTO>> createSupplier(@RequestBody SupplierDTO supplierDTO) {
         SupplierDTO createdSupplier = supplierService.createSupplier(supplierDTO);
-        return new ResponseEntity<>(createdSupplier, HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response<>("Supplier created successfully", createdSupplier), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -56,14 +76,14 @@ public class SupplierController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadCSVFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Response<String>> uploadCSVFile(@RequestParam("file") MultipartFile file) {
         try {
             supplierService.processCSV(file);
-            return ResponseEntity.status(HttpStatus.OK).body("CSV processed successfully. Data added successfully.");
+            return new ResponseEntity<>(new Response<>("CSV processed successfully. Data added successfully.", null), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CSV processing failed: Invalid content - " + e.getMessage());
+            return new ResponseEntity<>(new Response<>("CSV processing failed: Invalid content", e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process CSV: " + e.getMessage());
+            return new ResponseEntity<>(new Response<>("Failed to process CSV", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -28,21 +28,41 @@ public class ProductController {
         this.productServiceImpl = productServiceImpl;
     }
 
+
+    // Custom response class for success and error cases
+    static class Response<T> {
+        private final String message;
+        private final T data;
+
+        public Response(String message, T data) {
+            this.message = message;
+            this.data = data;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public T getData() {
+            return data;
+        }
+    }
+
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Response<ProductDTO>> createProduct(@RequestBody ProductDTO productDTO) {
         ProductDTO createdProduct = productService.createProduct(productDTO);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response<>("Product created successfully", createdProduct), HttpStatus.CREATED);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Response<String>> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             productService.processCSV(file);
-            return ResponseEntity.status(HttpStatus.OK).body("CSV processed successfully. Data added successfully.");
+            return new ResponseEntity<>(new Response<>("CSV processed successfully. Data added successfully.", null), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CSV processing failed: Invalid content - " + e.getMessage());
+            return new ResponseEntity<>(new Response<>("CSV processing failed: Invalid content", e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (IOException | WriterException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process CSV: " + e.getMessage());
+            return new ResponseEntity<>(new Response<>("Failed to process CSV", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
