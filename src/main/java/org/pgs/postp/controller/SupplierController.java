@@ -43,7 +43,6 @@ public class SupplierController {
         }
     }
 
-
     @PostMapping
     public ResponseEntity<Response<SupplierDTO>> createSupplier(@RequestBody SupplierDTO supplierDTO) {
         SupplierDTO createdSupplier = supplierService.createSupplier(supplierDTO);

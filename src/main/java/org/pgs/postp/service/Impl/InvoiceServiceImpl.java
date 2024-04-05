@@ -5,14 +5,18 @@ import org.pgs.postp.dto.InvoiceDTO;
 import org.pgs.postp.mapper.InvoiceMapper;
 import org.pgs.postp.model.Cart;
 import org.pgs.postp.model.InvoiceModel;
+import org.pgs.postp.model.ProductModel;
 import org.pgs.postp.repository.CartRepository;
 import org.pgs.postp.repository.InvoiceRepository;
+import org.pgs.postp.repository.ProductRepository;
 import org.pgs.postp.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,11 +32,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceMapper invoiceMapper;
     private final CartRepository cartRepository;
 
+    private final ProductRepository productRepository;
+
     @Autowired
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, CartRepository cartRepository) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, CartRepository cartRepository, ProductRepository productRepository) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceMapper = invoiceMapper;
         this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -67,7 +74,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceModel savedInvoice = invoiceRepository.save(invoice);
         return invoiceMapper.toDTO(savedInvoice);
     }
-
     @Override
     public InvoiceDTO updateInvoice(Long id, InvoiceDTO invoiceDTO) {
         InvoiceModel existingInvoice = invoiceRepository.findById(id)
