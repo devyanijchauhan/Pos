@@ -1,6 +1,7 @@
 package org.pgs.postp.service;
 
 import org.pgs.postp.dto.InvoiceDTO;
+import org.pgs.postp.model.Cart;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
@@ -56,4 +57,9 @@ public interface InvoiceService {
 
     // Get total price for invoices created in a particular month
     Long getTotalPriceForCurrentMonth();
+
+    // Method to update product quantities based on the items in the invoice
+    void updateProductQuantities(List<Cart> cartItems);
+
+
 }

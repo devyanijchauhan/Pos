@@ -56,24 +56,37 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .orElseThrow(() -> new RuntimeException("Invoice not found with id: " + id));
         return invoiceMapper.toDTO(invoice);
     }
-
-    //    @Override
-//    public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
-//        InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
-//        Cart cart =invoiceDTO.getCartData();
-//        Cart savedCart = cartRepository.save(cart);
-//        calculateTotalPrice(invoice);
-//        invoice.setCartData(savedCart);
-//        InvoiceModel savedInvoice = invoiceRepository.save(invoice);
-//        return invoiceMapper.toDTO(savedInvoice);
-//    }
+    
     @Override
     public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
         InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
         calculateTotalPrice(invoice);
         InvoiceModel savedInvoice = invoiceRepository.save(invoice);
+        // Update product quantities
+        updateProductQuantities(invoiceDTO.getCartData());
         return invoiceMapper.toDTO(savedInvoice);
     }
+
+    public void updateProductQuantities(List<Cart> cartItems) {
+        for (Cart cartItem : cartItems) {
+            Long productId = cartItem.getProductId();
+            BigDecimal quantity = cartItem.getQuantity();
+
+            ProductModel product = productRepository.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
+
+            BigDecimal currentStock = product.getStockQuantity();
+            BigDecimal updatedStock = currentStock.subtract(quantity);
+            if (updatedStock.compareTo(BigDecimal.ZERO) < 0) {
+                throw new RuntimeException("Insufficient stock for product: " + product.getName());
+            }
+
+            product.setStockQuantity(updatedStock);
+            productRepository.save(product);
+        }
+    }
+
+
     @Override
     public InvoiceDTO updateInvoice(Long id, InvoiceDTO invoiceDTO) {
         InvoiceModel existingInvoice = invoiceRepository.findById(id)
