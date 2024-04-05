@@ -61,7 +61,7 @@ public class InvoiceModel {
     @Column(name = "Status", nullable = false)
     private String status;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
     private List<Cart> cartData;
 
