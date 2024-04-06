@@ -6,9 +6,11 @@ import org.pgs.postp.mapper.InvoiceMapper;
 import org.pgs.postp.model.Cart;
 import org.pgs.postp.model.InvoiceModel;
 import org.pgs.postp.model.ProductModel;
+import org.pgs.postp.model.VoucherModel;
 import org.pgs.postp.repository.CartRepository;
 import org.pgs.postp.repository.InvoiceRepository;
 import org.pgs.postp.repository.ProductRepository;
+import org.pgs.postp.repository.VoucherRepository;
 import org.pgs.postp.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,12 +36,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final ProductRepository productRepository;
 
+    private final VoucherRepository voucherRepository;
+
     @Autowired
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, CartRepository cartRepository, ProductRepository productRepository) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, CartRepository cartRepository, ProductRepository productRepository, VoucherRepository voucherRepository) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceMapper = invoiceMapper;
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
+        this.voucherRepository = voucherRepository;
     }
 
     @Override
@@ -61,10 +66,23 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceDTO createInvoice(InvoiceDTO invoiceDTO) {
         InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
         calculateTotalPrice(invoice);
+
+        // Check if a voucher is applied
+        if (invoice.getVoucher() != null && !invoice.getVoucher().isEmpty()) {
+            // Retrieve the voucher from the repository
+            VoucherModel voucher = voucherRepository.findByVoucherCode(invoice.getVoucher());
+            if (voucher != null && voucher.getValidForNumberOfCustomers() > 0) {
+                // Decrease the remaining count for valid number of customers
+                voucher.setValidForNumberOfCustomers(voucher.getValidForNumberOfCustomers() - 1);
+                // Save the updated voucher
+                voucherRepository.save(voucher);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid voucher code or no remaining uses.");
+            }
+        }
+
         InvoiceModel savedInvoice = invoiceRepository.save(invoice);
-
         updateProductQuantities(invoiceDTO.getCartData());
-
         return invoiceMapper.toDTO(savedInvoice);
     }
 
