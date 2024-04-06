@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.time.YearMonth;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/reports")
 @CrossOrigin( origins = "http://Localhost:4200")
 public class ReportController {
@@ -90,6 +92,7 @@ public class ReportController {
         reportDTO.setTotalDiscountForMonth(totalDiscountForMonth);
         Long totalPriceForMonth = invoiceService.getTotalPriceForCurrentMonth();
         reportDTO.setTotalPriceForMonth(totalPriceForMonth);
+
 
         return new ResponseEntity<>(reportDTO, HttpStatus.OK);
     }

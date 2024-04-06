@@ -1,15 +1,22 @@
 package org.pgs.postp.controller;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.pgs.postp.dto.UserDTO;
+import org.pgs.postp.dto.auth.request.AuthRequestDTO;
+import org.pgs.postp.dto.auth.response.JwtResponseDTO;
 import org.pgs.postp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('ADMIN') || hasAuthority('MANAGER')")
 @RequestMapping("/api/users")
 @CrossOrigin( origins = "http://Localhost:4200")
 public class UserController {
@@ -51,4 +58,5 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }
