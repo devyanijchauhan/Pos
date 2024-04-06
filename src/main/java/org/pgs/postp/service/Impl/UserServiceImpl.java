@@ -1,10 +1,8 @@
 package org.pgs.postp.service.Impl;
 
 import org.mapstruct.control.MappingControl;
-import org.pgs.postp.dto.BarcodeDTO;
 import org.pgs.postp.dto.UserDTO;
 import org.pgs.postp.mapper.UserMapper;
-import org.pgs.postp.model.BarcodeModel;
 import org.pgs.postp.model.ProductModel;
 import org.pgs.postp.model.UserModel;
 import org.pgs.postp.repository.ProductRepository;
