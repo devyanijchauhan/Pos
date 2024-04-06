@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VoucherRepository extends JpaRepository<VoucherModel, Long> {
 
+    VoucherModel findByVoucherCode(String voucherCode);
+
+
 }
