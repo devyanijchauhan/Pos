@@ -62,8 +62,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceModel invoice = invoiceMapper.toEntity(invoiceDTO);
         calculateTotalPrice(invoice);
         InvoiceModel savedInvoice = invoiceRepository.save(invoice);
-        // Update product quantities
+
         updateProductQuantities(invoiceDTO.getCartData());
+
         return invoiceMapper.toDTO(savedInvoice);
     }
 
@@ -134,10 +135,10 @@ public class InvoiceServiceImpl implements InvoiceService {
             existingInvoice.setCartData(invoiceDTO.getCartData());
         }
 
-        // Calculate total price
+
         calculateTotalPrice(existingInvoice);
 
-        // Update properties here
+
         InvoiceModel updatedInvoice = invoiceRepository.save(existingInvoice);
         return invoiceMapper.toDTO(updatedInvoice);
     }
@@ -147,7 +148,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         long totalTax = invoice.getTotalTax() != null ? invoice.getTotalTax() : 0;
         long totalDiscount = invoice.getTotalDiscount() != null ? invoice.getTotalDiscount() : 0;
 
-        // Calculate total price
+
         long totalPrice = totalMRP + totalTax - totalDiscount;
         invoice.setTotalPrice(totalPrice);
     }
@@ -160,10 +161,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceRepository.deleteById(id);
     }
 
-    // Implementation of the getInvoiceCount() method
+
     @Override
     public long getInvoiceCount() {
-        // Your implementation to retrieve invoice count from the database
         return invoiceRepository.count();
     }
 
@@ -189,76 +189,60 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public int getTotalInvoicesCreatedThisWeek() {
-        // Get the start date of the current week (assuming week starts on Monday)
         LocalDate startDate = LocalDate.now().with(DayOfWeek.MONDAY);
 
-        // Get the end date of the current wee
         LocalDate endDate = startDate.plusDays(6);
 
-        // Get the start and end of the current week as LocalDateTime for querying
+
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for invoices created within the current week
         int totalInvoices = invoiceRepository.countByCreatedAtBetween(startDateTime, endDateTime);
 
         return totalInvoices;
     }
 
-    //for particular week (startDate to endDate)
+    //for particular week
     @Override
     public int getTotalInvoicesCreatedInCurrentWeek() {
-        // Get the current date
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current week (assuming week starts on Monday)
         LocalDate startDate = currentDate.with(DayOfWeek.MONDAY);
 
-        // Get the end date of the current week
         LocalDate endDate = startDate.plusDays(6);
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
         return invoiceRepository.countByCreatedAtBetween(startDateTime, endDateTime);
     }
 
-    //for particular month (startDate to endDate)
+    //for particular month
     @Override
     public int getTotalInvoicesCreatedInCurrentMonth() {
-        // Get the current date
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current month
         LocalDate startDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1);
 
-        // Get the end date of the current month
         LocalDate endDate = YearMonth.from(currentDate).atEndOfMonth();
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for total invoices created within the current month
         return invoiceRepository.countByCreatedAtBetween(startDateTime, endDateTime);
     }
 
     @Override
     public Long getTotalMRPForCurrentWeek() {
-        // Get the current date
+
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current week (assuming week starts on Monday)
         LocalDate startDate = currentDate.with(DayOfWeek.MONDAY);
 
-        // Get the end date of the current week
         LocalDate endDate = startDate.plusDays(6);
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for total MRP of invoices created within the current week
         return invoiceRepository.getTotalMRPForCurrentWeek(startDateTime, endDateTime);
     }
 
@@ -267,16 +251,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Long getTotalTaxForCurrentWeek() {
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current week (assuming week starts on Monday)
         LocalDate startDate = currentDate.with(DayOfWeek.MONDAY);
 
-        // Get the end date of the current week
+
         LocalDate endDate = startDate.plusDays(6);
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
-        // Query the database for total MRP within the current week
         return invoiceRepository.getTotalTaxForCurrentWeek(startDateTime, endDateTime);
     }
 
@@ -284,13 +265,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Long getTotalDiscountForCurrentWeek() {
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current week (assuming week starts on Monday)
         LocalDate startDate = currentDate.with(DayOfWeek.MONDAY);
 
-        // Get the end date of the current week
         LocalDate endDate = startDate.plusDays(6);
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
         return invoiceRepository.getTotalDiscountForCurrentWeek(startDateTime, endDateTime);
@@ -300,13 +278,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Long getTotalPriceForCurrentWeek() {
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current week (assuming week starts on Monday)
         LocalDate startDate = currentDate.with(DayOfWeek.MONDAY);
 
-        // Get the end date of the current week
         LocalDate endDate = startDate.plusDays(6);
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
         return invoiceRepository.getTotalPriceForCurrentWeek(startDateTime, endDateTime);
@@ -315,78 +290,58 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Long getTotalMRPForCurrentMonth() {
-        // Get the current date
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current month
         LocalDate startDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1);
 
-        // Get the end date of the current month
         LocalDate endDate = YearMonth.from(currentDate).atEndOfMonth();
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for total invoices created within the current month
         return invoiceRepository.getTotalMRPForCurrentMonth(startDateTime, endDateTime);
     }
 
 
     @Override
     public Long getTotalTaxForCurrentMonth() {
-        // Get the current date
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current month
         LocalDate startDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1);
 
-        // Get the end date of the current month
         LocalDate endDate = YearMonth.from(currentDate).atEndOfMonth();
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for total invoices created within the current month
         return invoiceRepository.getTotalTaxForCurrentMonth(startDateTime, endDateTime);
     }
 
     @Override
     public Long getTotalDiscountForCurrentMonth() {
-        // Get the current date
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current month
         LocalDate startDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1);
 
-        // Get the end date of the current month
         LocalDate endDate = YearMonth.from(currentDate).atEndOfMonth();
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for total invoices created within the current month
         return invoiceRepository.getTotalDiscountForCurrentMonth(startDateTime, endDateTime);
     }
 
     @Override
     public Long getTotalPriceForCurrentMonth() {
-        // Get the current date
         LocalDate currentDate = LocalDate.now();
 
-        // Get the start date of the current month
         LocalDate startDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1);
 
-        // Get the end date of the current month
         LocalDate endDate = YearMonth.from(currentDate).atEndOfMonth();
 
-        // Convert LocalDate to LocalDateTime for querying
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
 
-        // Query the database for total invoices created within the current month
         return invoiceRepository.getTotalPriceForCurrentMonth(startDateTime, endDateTime);
     }
 }

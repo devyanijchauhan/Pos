@@ -26,7 +26,6 @@ public class InventoryMapper {
         InventoryModel inventoryModel = new InventoryModel();
         inventoryModel.setInventoryID(inventoryDTO.getInventoryID());
         inventoryModel.setQuantity(inventoryDTO.getQuantity());
-        // Assuming productId is set via ProductModel object in InventoryModel
         if (inventoryDTO.getProductId() != null) {
             ProductModel product = new ProductModel();
             product.setProductId(inventoryDTO.getProductId());

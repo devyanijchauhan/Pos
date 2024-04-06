@@ -8,7 +8,7 @@ public class CustomerPurchaseHistoryDTO {
     private Long transactionId;
     private LocalDateTime purchaseDate;
 
-    // Constructors
+
     public CustomerPurchaseHistoryDTO() {
     }
 
@@ -19,7 +19,7 @@ public class CustomerPurchaseHistoryDTO {
         this.purchaseDate = purchaseDate;
     }
 
-    // Getters and Setters
+
     public Long getPurchaseID() {
         return purchaseID;
     }

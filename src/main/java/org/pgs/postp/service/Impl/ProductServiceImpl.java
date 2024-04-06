@@ -67,10 +67,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public List<ProductDTO> getProductsBySupplierId(Long supplierId) {
-        // Fetch the products by supplier ID using the repository method
         List<ProductModel> products = productRepository.findBySupplierId(supplierId);
 
-        // Map the found product entities to DTOs
         return products.stream()
                 .map(ProductMapper::toDTO)
                 .collect(Collectors.toList());
@@ -91,16 +89,13 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("At least one supplier must be provided");
         }
 
-        // Fetch the suppliers from the database
         List<SupplierModel> suppliers = productDTO.getSupplierIds().stream()
                 .map(supplierId -> supplierRepository.findById(supplierId)
                         .orElseThrow(() -> new RuntimeException("Supplier not found with id: " + supplierId)))
                 .collect(Collectors.toList());
 
-        // Generate unique barcode number
         String barcodeNumber = generateUniqueBarcodeNumber();
 
-        // Generate barcode image
         byte[] barcodeImageBytes;
         try {
             barcodeImageBytes = generateBarcodeImage(barcodeNumber, 200, 50);
@@ -109,7 +104,6 @@ public class ProductServiceImpl implements ProductService {
         }
 
 
-        // Create the ProductModel entity and set the suppliers
         ProductModel product = new ProductModel(
                 productDTO.getName(),
                 productDTO.getDescription(),
@@ -119,23 +113,21 @@ public class ProductServiceImpl implements ProductService {
                 productDTO.getStockQuantity(),
                 productDTO.getPurchasePrice(),
                 barcodeNumber,
-                barcodeImageBytes, // Updated to use the generated barcode image byte array
+                barcodeImageBytes,
                 suppliers);
         calculatePrice(product);
-        // Save the product to the database
         ProductModel savedProduct = productRepository.save(product);
         return productMapper.toDTO(savedProduct);
     }
-    // Helper method to generate a unique barcode number
+
     private String generateUniqueBarcodeNumber() {
         String barcodeNumber;
         boolean unique = false;
         do {
 
-            barcodeNumber = generateBarcodeNumber(); // Generate a random barcode number
-            // Check if the generated barcode number already exists in the database
+            barcodeNumber = generateBarcodeNumber();
             if (!productRepository.findByBarcodeNumber(barcodeNumber).isPresent()) {
-                unique = true; // Set unique to true if the barcode number is not found in the database
+                unique = true;
             }
         } while (!unique);
 
@@ -144,12 +136,11 @@ public class ProductServiceImpl implements ProductService {
 
 
     private byte[] generateBarcodeImage(String barcodeText, int width, int height) throws WriterException, IOException {
-        // Set barcode parameters
+
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 0); // Set margin to 0
+        hints.put(EncodeHintType.MARGIN, 0);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(barcodeText, BarcodeFormat.CODE_128, width, height, hints);
 
-        // Convert bitMatrix to byte array
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
         return outputStream.toByteArray();
@@ -188,17 +179,10 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setPurchasePrice(productDTO.getPurchasePrice());
         }
 
-//        if (productDTO.getBarcodeNumber() != null) {
-//            existingProduct.setBarcodeNumber(productDTO.getBarcodeNumber());
-//        }
-//        if (productDTO.getBarcodeImage() != null) {
-//            existingProduct.setBarcodeImage(productDTO.getBarcodeImage());
-//        }
 
-        // Calculate total price
+
         calculatePrice(existingProduct);
 
-        // Update properties here
         ProductModel updatedProduct = productRepository.save(existingProduct);
         return productMapper.toDTO(updatedProduct);
     }
@@ -208,7 +192,6 @@ public class ProductServiceImpl implements ProductService {
         BigDecimal tax = product.getTax() != null ? product.getTax() : BigDecimal.ZERO;
 
 
-        // Calculate total price
         BigDecimal total = price.add(tax);
         product.setTotal(total);
     }
@@ -224,14 +207,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     public void processCSV(MultipartFile file) throws IOException, WriterException {
-        // Check CSV file headers
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-//        String headerLine = br.readLine();
-//        if (headerLine == null || !headerLine.equals("Name,Description,Price,Tax,Total,StockQuantity,PurchasePrice")) {
-//            throw new IllegalArgumentException("Invalid CSV file format or headers");
-//        }
 
-        // Skip the header line
         br.readLine();
 
 
@@ -250,10 +227,7 @@ public class ProductServiceImpl implements ProductService {
             String[] supplierIds = data[7].trim().split("\\s+");
             List<SupplierModel> supplierModels = new ArrayList<>();
             for(var supId: supplierIds) {
-//                var suppModel = supplierRepository.findById(Long.parseLong(supId)).orElse(null);
-//                if (suppModel != null) {
-//                    supplierModels.add(suppModel);
-//                }
+
                 try {
                     long supplierId = Long.parseLong(supId.trim());
                     SupplierModel suppModel = supplierRepository.findById(supplierId)
@@ -261,11 +235,10 @@ public class ProductServiceImpl implements ProductService {
                     if (suppModel != null) {
                         supplierModels.add(suppModel);
                     } else {
-                        // If a supplier with the given ID is not found, throw an exception
+
                         throw new IllegalArgumentException("Supplier not found with id: " + supplierId);
                     }
                 } catch (NumberFormatException e) {
-                    // If the supplier ID cannot be parsed as a long value, throw an exception
                     throw new IllegalArgumentException("Invalid supplier ID: " + supId);
                 }
             }
@@ -287,7 +260,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private String generateBarcodeNumber() {
-        // Generate random barcode (you can implement your own logic)
         Random random = new Random();
         StringBuilder barcode = new StringBuilder("P");
         for (int i = 0; i < 5; i++) {
@@ -298,21 +270,20 @@ public class ProductServiceImpl implements ProductService {
 
     private String generateBarcodeImage() {
         try {
-            String barcodeText = generateBarcodeNumber(); // Generate a random barcode number
-            byte[] barcodeBytes = generateBarcode(barcodeText, 200, 50); // Generate barcode image bytes
-            return Base64.getEncoder().encodeToString(barcodeBytes); // Convert bytes to base64 encoded string
+            String barcodeText = generateBarcodeNumber();
+            byte[] barcodeBytes = generateBarcode(barcodeText, 200, 50);
+            return Base64.getEncoder().encodeToString(barcodeBytes);
         } catch (Exception e) {
             throw new RuntimeException("Error generating barcode image");
         }
     }
 
     public static byte[] generateBarcode(String barcodeText, int width, int height) throws WriterException, IOException {
-        // Set barcode parameters
+
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 0); // Set margin to 0
+        hints.put(EncodeHintType.MARGIN, 0);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(barcodeText, BarcodeFormat.CODE_128, width, height, hints);
 
-        // Convert bitMatrix to byte array
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
         return outputStream.toByteArray();

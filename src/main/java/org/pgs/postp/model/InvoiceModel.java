@@ -65,7 +65,7 @@ public class InvoiceModel {
     @JoinColumn(name = "invoice_id")
     private List<Cart> cartData;
 
-    // Constructors
+
     public InvoiceModel() {
     }
 
@@ -86,7 +86,7 @@ public class InvoiceModel {
         this.cartData = cartData;
     }
 
-    // Getters and Setters
+
     public Long getInvoiceID() {
         return invoiceID;
     }

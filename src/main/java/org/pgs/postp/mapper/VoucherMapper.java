@@ -18,7 +18,7 @@ public class VoucherMapper {
         dto.setDiscountAmount(model.getDiscountAmount());
         dto.setValidForNumberOfCustomers(model.getValidForNumberOfCustomers());
         dto.setValidForNumberOfDays(model.getValidForNumberOfDays());
-//        dto.setValidUntil(model.getValidUntil());
+
 
         return dto;
     }
@@ -34,7 +34,7 @@ public class VoucherMapper {
         model.setDiscountAmount(dto.getDiscountAmount());
         model.setValidForNumberOfCustomers(dto.getValidForNumberOfCustomers());
         model.setValidForNumberOfDays(dto.getValidForNumberOfDays());
-//        model.setValidUntil(dto.getValidUntil());
+
 
         return model;
     }
@@ -49,7 +49,7 @@ public class VoucherMapper {
         voucherModel.setDiscountAmount(voucherDTO.getDiscountAmount());
         voucherModel.setValidForNumberOfCustomers(voucherDTO.getValidForNumberOfCustomers());
         voucherModel.setValidForNumberOfDays(voucherDTO.getValidForNumberOfDays());
-//        voucherModel.setValidUntil(voucherDTO.getValidUntil());
+
         return voucherModel;
     }
 

@@ -43,12 +43,7 @@ public class InventoryServiceImpl implements InventoryService {
         return inventoryMapper.toDTO(inventory);
     }
 
-//    @Override
-//    public InventoryDTO createInventory(InventoryDTO inventoryDTO) {
-//        InventoryModel inventory = inventoryMapper.toEntity(inventoryDTO);
-//        InventoryModel savedInventory = inventoryRepository.save(inventory);
-//        return inventoryMapper.toDTO(savedInventory);
-//    }
+
 
     @Override
     public InventoryDTO createInventory(InventoryDTO inventoryDTO) {
@@ -56,16 +51,15 @@ public class InventoryServiceImpl implements InventoryService {
             throw new IllegalArgumentException("Product ID must be provided");
         }
 
-        // Fetch the product from the database
         ProductModel product = productRepository.findById(inventoryDTO.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + inventoryDTO.getProductId()));
 
-        // Create the InventoryModel entity and set the product
+
         InventoryModel inventory = new InventoryModel(
                 product,
                 inventoryDTO.getQuantity());
 
-        // Save the inventory to the database
+
         InventoryModel savedInventory = inventoryRepository.save(inventory);
         return inventoryMapper.toDTO(savedInventory);
     }
@@ -79,7 +73,7 @@ public class InventoryServiceImpl implements InventoryService {
             existingInventory.setQuantity(inventoryDTO.getQuantity());
         }
 
-        // Update properties here
+
         InventoryModel updatedInventory = inventoryRepository.save(existingInventory);
         return inventoryMapper.toDTO(updatedInventory);
     }

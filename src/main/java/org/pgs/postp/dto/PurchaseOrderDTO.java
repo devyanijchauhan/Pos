@@ -17,7 +17,7 @@ public class PurchaseOrderDTO {
     private String paymentMethod;
     private String status;
 
-    // Constructor
+
     public PurchaseOrderDTO() {
     }
 
@@ -37,7 +37,7 @@ public class PurchaseOrderDTO {
         this.status = status;
     }
 
-    // Getters and Setters for fields
+
 
     public Long getId() {
         return id;

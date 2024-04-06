@@ -48,12 +48,6 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionMapper.toDTO(transaction);
     }
 
-//    @Override
-//    public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
-//        TransactionModel transaction = transactionMapper.toEntity(transactionDTO);
-//        TransactionModel savedTransaction = transactionRepository.save(transaction);
-//        return transactionMapper.toDTO(savedTransaction);
-//    }
 
     @Override
     public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
@@ -64,15 +58,14 @@ public class TransactionServiceImpl implements TransactionService {
             throw new IllegalArgumentException("Customer ID must be provided");
         }
 
-        // Fetch the user from the database
+
         UserModel user = userRepository.findById(transactionDTO.getUserID())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + transactionDTO.getUserID()));
-        // Fetch the customer from the database
+
         CustomerModel customer = customerRepository.findById(transactionDTO.getCustomerID())
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + transactionDTO.getCustomerID()));
 
-        // Create the TransactionModel entity and set the user
-        // Create the TransactionModel entity and set the customer
+
         TransactionModel transaction = new TransactionModel(
                 user,
                 customer,
@@ -80,8 +73,7 @@ public class TransactionServiceImpl implements TransactionService {
                 transactionDTO.getPaymentMethod(),
                 transactionDTO.getTransactionDate() );
 
-        // Save the user to the database
-        // Save the customer to the database
+
         TransactionModel savedTransaction = transactionRepository.save(transaction);
         return transactionMapper.toDTO(savedTransaction);
 
@@ -102,7 +94,6 @@ public class TransactionServiceImpl implements TransactionService {
         if(transactionDTO.getTransactionDate()!=null){
             existingTransaction.setTransactionDate(transactionDTO.getTransactionDate());
         }
-        // Update properties here
         TransactionModel updatedTransaction = transactionRepository.save(existingTransaction);
         return transactionMapper.toDTO(updatedTransaction);
     }

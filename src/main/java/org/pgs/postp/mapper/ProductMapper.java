@@ -31,8 +31,7 @@ public class ProductMapper {
     }
 
     public static ProductModel toEntity(ProductDTO productDTO) {
-        // This method doesn't map the supplierIds to suppliers
-        // As it depends on how you handle suppliers, you might need additional logic here
+
         ProductModel productModel = new ProductModel();
         productModel.setProductId(productDTO.getProductId());
         productModel.setName(productDTO.getName());

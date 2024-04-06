@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoleRepository extends JpaRepository<RoleModel, Long> {
-    // You can add custom query methods if needed
+
 }

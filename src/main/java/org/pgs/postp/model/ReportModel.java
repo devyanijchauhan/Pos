@@ -7,8 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "Reports")
 public class ReportModel {
 
-//    @Id
-//    private Long reportID;
+
 
     @Column(name = "VoucherCount")
     @JsonProperty("voucher_count")
@@ -73,20 +72,14 @@ public class ReportModel {
     @Column(name = "TotalPriceForMonth")
     @JsonProperty("total_price_for_month")
     private long totalPriceForMonth;
+
     @Id
     private Long id;
 
     public ReportModel() {
     }
 
-    // Getters and Setters
-//    public Long getReportID() {
-//        return reportID;
-//    }
-//
-//    public void setReportID(Long reportID) {
-//        this.reportID = reportID;
-//    }
+
 
     public long getVoucherCount() {
         return voucherCount;

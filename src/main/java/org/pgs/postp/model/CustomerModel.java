@@ -3,7 +3,7 @@ package org.pgs.postp.model;
 import jakarta.persistence.*;
 
 import java.math.BigInteger;
-import java.util.List;
+
 
 @Entity
 @Table(name = "Customers")
@@ -12,7 +12,7 @@ public class CustomerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CustomerID")
-    private Long id; // Updated field name
+    private Long id;
 
     @Column(name = "Name", nullable = false)
     private String name;
@@ -26,10 +26,7 @@ public class CustomerModel {
     @Column(name = "Address")
     private String address;
 
-//    @OneToMany(mappedBy = "id")
-//    private List<TransactionModel> transactions;
-
-    // Constructors
+    // Constructors--
     public CustomerModel() {
     }
 
@@ -40,7 +37,7 @@ public class CustomerModel {
         this.address = address;
     }
 
-    // Getters and Setters
+    // Getters, Setters
     public Long getId() { // Updated getter name
         return id;
     }
@@ -69,7 +66,7 @@ public class CustomerModel {
         return phone;
     }
 
-    public void setPhone(BigInteger phone) {
+    public void setPhone(BigInteger     phone) {
         this.phone = phone;
     }
 
@@ -79,12 +76,4 @@ public class CustomerModel {
         this.address = address;
     }
 
-
-//    public List<TransactionModel> getTransactions() {
-//        return transactions;
-//    }
-//
-//    public void setTransactions(List<TransactionModel> transactions) {
-//        this.transactions = transactions;
-//    }
 }

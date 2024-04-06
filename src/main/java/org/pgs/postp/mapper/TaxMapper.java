@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TaxMapper {
 
-    // Convert TaxModel to TaxDTO
+
     public TaxDTO toDTO(TaxModel model) {
         TaxDTO dto = new TaxDTO();
         dto.setTaxID(model.getTaxID());
@@ -16,7 +16,7 @@ public class TaxMapper {
         return dto;
     }
 
-    // Convert TaxDTO to TaxModel
+
     public static TaxModel toEntity(TaxDTO dto) {
         TaxModel model = new TaxModel();
         model.setTaxID(dto.getTaxID());

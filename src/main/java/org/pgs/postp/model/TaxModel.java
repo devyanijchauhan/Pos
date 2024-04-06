@@ -17,7 +17,7 @@ public class TaxModel {
     @Column(name = "TaxRate", nullable = false)
     private double taxRate;
 
-    // Constructors
+
     public TaxModel() {
     }
 
@@ -26,7 +26,7 @@ public class TaxModel {
         this.taxRate = taxRate;
     }
 
-    // Getters and Setters
+
     public Long getTaxID() {
         return taxID;
     }

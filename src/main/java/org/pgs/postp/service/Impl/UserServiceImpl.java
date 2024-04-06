@@ -1,11 +1,11 @@
 package org.pgs.postp.service.Impl;
 
-import org.mapstruct.control.MappingControl;
+
 import org.pgs.postp.dto.UserDTO;
 import org.pgs.postp.mapper.UserMapper;
-import org.pgs.postp.model.ProductModel;
+
 import org.pgs.postp.model.UserModel;
-import org.pgs.postp.repository.ProductRepository;
+
 import org.pgs.postp.repository.UserRepository;
 import org.pgs.postp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +47,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(UserDTO userDTO) {
 
-        // Check if email already exists
+
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        // Check if phone already exists
         if (userRepository.existsByPhone(userDTO.getPhone())) {
             throw new IllegalArgumentException("Phone number already exists");
         }
@@ -82,7 +81,6 @@ public class UserServiceImpl implements UserService {
 
         existingUser.setUsername(userDTO.getUsername());
         existingUser.setPassword(userDTO.getPassword());
-        // Update other properties as needed
 
         UserModel updatedUser = userRepository.save(existingUser);
         return userMapper.toDTO(updatedUser);
@@ -96,10 +94,10 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    // Implementation of the getUserCount() method
+
     @Override
     public long getUserCount() {
-        // Your implementation to retrieve user count from the database
+
         return userRepository.count();
     }
 

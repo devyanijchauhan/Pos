@@ -8,7 +8,6 @@ import java.math.BigInteger;
 
 @Repository
 public interface SupplierRepository extends JpaRepository<SupplierModel, Long> {
-    // You can add custom query methods if needed
 
     boolean existsBySupplierEmail(String supplierEmail);
 

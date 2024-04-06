@@ -18,12 +18,12 @@ public class UserMapper {
         dto.setName(model.getName());
         dto.setEmail(model.getEmail());
         dto.setPhone(model.getPhone());
-        dto.setRole(model.getRole()); // Set role directly from UserModel
-        // You might choose to map other properties here, depending on your requirements
+        dto.setRole(model.getRole());
+
         return dto;
     }
 
-    // Convert UserDTO to UserModel
+
     public static UserModel toEntity(UserDTO dto) {
         UserModel model = new UserModel();
         model.setUserID(dto.getUserID());
@@ -32,8 +32,8 @@ public class UserMapper {
         model.setName(dto.getName());
         model.setEmail(dto.getEmail());
         model.setPhone(dto.getPhone());
-        model.setRole(dto.getRole()); // Set role directly from UserDTO
-        // You might choose to map other properties here, depending on your requirements
+        model.setRole(dto.getRole());
+
         return model;
     }
 }

@@ -4,7 +4,7 @@ public class RoleDTO {
     private Long roleID;
     private String roleName;
 
-    // Constructors
+
     public RoleDTO() {
     }
 
@@ -13,7 +13,7 @@ public class RoleDTO {
         this.roleName = roleName;
     }
 
-    // Getters and Setters
+
     public Long getRoleID() {
         return roleID;
     }

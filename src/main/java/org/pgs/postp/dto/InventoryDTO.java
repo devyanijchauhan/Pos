@@ -7,7 +7,7 @@ public class InventoryDTO {
     private Long productId;
     private BigDecimal quantity;
 
-    // Constructors
+
     public InventoryDTO() {
     }
 
@@ -17,7 +17,7 @@ public class InventoryDTO {
         this.quantity = quantity;
     }
 
-    // Getters and Setters
+
     public Long getInventoryID() {
         return inventoryID;
     }

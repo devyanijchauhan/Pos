@@ -29,9 +29,9 @@ public class UserModel {
     private BigInteger phone;
 
     @Column(name = "Role", nullable = false)
-    private String role; // Changed to String datatype
+    private String role;
 
-    // Constructors
+
     public UserModel() {
     }
 
@@ -44,7 +44,7 @@ public class UserModel {
         this.role = role;
     }
 
-    // Getters and Setters
+
     public Long getUserID() {
         return userID;
     }

@@ -8,7 +8,6 @@ import java.math.BigInteger;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
-    // You can add custom query methods if needed
 
     boolean existsByEmail(String email);
 

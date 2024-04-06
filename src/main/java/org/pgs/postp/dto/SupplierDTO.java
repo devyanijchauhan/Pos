@@ -14,7 +14,7 @@ public class SupplierDTO {
 
     private String address;
 
-    // Constructors
+
     public SupplierDTO() {
     }
 
@@ -30,7 +30,7 @@ public class SupplierDTO {
         this.address = address;
     }
 
-    // Getters and Setters
+
     public Long getSupplierID() {
         return supplierID;
     }

@@ -9,9 +9,9 @@ public class VoucherDTO {
     private Double discountAmount;
     private Integer validForNumberOfCustomers;
     private Integer validForNumberOfDays;
-//    private Date validUntil;
 
-    // Constructors
+
+
     public VoucherDTO() {
     }
 
@@ -21,10 +21,8 @@ public class VoucherDTO {
         this.discountAmount = discountAmount;
         this.validForNumberOfCustomers = validForNumberOfCustomers;
         this.validForNumberOfDays = validForNumberOfDays;
-//        this.validUntil = validUntil;
     }
 
-    // Getters and Setters
     public Long getVoucherID() {
         return voucherID;
     }
@@ -65,11 +63,4 @@ public class VoucherDTO {
         this.validForNumberOfDays = validForNumberOfDays;
     }
 
-//    public Date getValidUntil() {
-//        return validUntil;
-//    }
-//
-//    public void setValidUntil(Date validUntil) {
-//        this.validUntil = validUntil;
-//    }
 }

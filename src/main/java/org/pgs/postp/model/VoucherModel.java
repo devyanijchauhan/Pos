@@ -23,11 +23,8 @@ public class VoucherModel {
     @Column(name = "ValidForNumberOfDays")
     private Integer validForNumberOfDays;
 
-//    @Temporal(TemporalType.DATE)
-//    @Column(name = "ValidUntil")
-//    private Date validUntil;
 
-    // Constructors
+
     public VoucherModel() {
     }
 
@@ -36,10 +33,9 @@ public class VoucherModel {
         this.discountAmount = discountAmount;
         this.validForNumberOfCustomers = validForNumberOfCustomers;
         this.validForNumberOfDays = validForNumberOfDays;
-//        this.validUntil = validUntil;
     }
 
-    // Getters and Setters
+
     public Long getVoucherID() {
         return voucherID;
     }
@@ -80,11 +76,4 @@ public class VoucherModel {
         this.validForNumberOfDays = validForNumberOfDays;
     }
 
-//    public Date getValidUntil() {
-//        return validUntil;
-//    }
-//
-//    public void setValidUntil(Date validUntil) {
-//        this.validUntil = validUntil;
-//    }
 }

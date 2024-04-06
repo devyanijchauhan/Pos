@@ -34,7 +34,7 @@ public class TransactionModel {
     @OneToMany(mappedBy = "transaction")
     private List<TransactionDetailModel> transactionDetails;
 
-    // Constructors
+
     public TransactionModel() {
     }
 
@@ -46,7 +46,7 @@ public class TransactionModel {
         this.transactionDate = transactionDate;
     }
 
-    // Getters and Setters
+
     public Long getTransactionID() {
         return transactionID;
     }

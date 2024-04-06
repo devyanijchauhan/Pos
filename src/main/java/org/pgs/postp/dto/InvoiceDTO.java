@@ -25,7 +25,7 @@ public class InvoiceDTO {
 
     private List<Cart> cartData;
 
-    // Constructors
+
     public InvoiceDTO() {
     }
 
@@ -49,7 +49,7 @@ public class InvoiceDTO {
         this.cartData = cartData;
     }
 
-    // Getters and Setters
+
     public Long getInvoiceID() {
         return invoiceID;
     }

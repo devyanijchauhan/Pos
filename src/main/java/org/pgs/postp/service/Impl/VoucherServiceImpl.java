@@ -49,11 +49,7 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public VoucherDTO updateVoucher(Long id, VoucherDTO voucherDTO) {
-//        if (voucherRepository.existsById(id)) {
-//            voucherDTO.setVoucherID(id);
-//            return voucherMapper.toDTO(voucherRepository.save(voucherMapper.toEntity(voucherDTO)));
-//        }
-//        return null;
+
 
         VoucherModel existingVoucher = voucherRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Voucher not found with id: " + id));
@@ -73,12 +69,7 @@ public class VoucherServiceImpl implements VoucherService {
             existingVoucher.setValidForNumberOfDays(voucherDTO.getValidForNumberOfDays());
         }
 
-//        if (voucherDTO.getValidUntil() != null) {
-//            existingVoucher.setValidUntil(voucherDTO.getValidUntil());
-//        }
 
-
-        // Update Properties here
         VoucherModel updateVoucher = voucherRepository.save(existingVoucher);
         return voucherMapper.toDTO(updateVoucher);
     }
@@ -92,10 +83,10 @@ public class VoucherServiceImpl implements VoucherService {
         voucherRepository.deleteById(id);
     }
 
-    // Implementation of the getVoucherCount() method
+
     @Override
     public long getVoucherCount() {
-        // Your implementation to retrieve voucher count from the database
+
         return voucherRepository.count();
     }
 

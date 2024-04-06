@@ -3,7 +3,7 @@ package org.pgs.postp.dto;
 import java.math.BigInteger;
 
 public class CustomerDTO {
-    private Long id; // Updated field name
+    private Long id;
     private String name;
     private String email;
     private BigInteger phone;

@@ -15,7 +15,7 @@ public class NotificationModel {
     @Column(name = "Message", nullable = false)
     private String message;
 
-    // Constructors
+
     public NotificationModel() {
     }
 
@@ -23,7 +23,8 @@ public class NotificationModel {
         this.message = message;
     }
 
-    //Getter and Setter
+
+
     public Long getNotificationID() {
         return notificationID;
     }

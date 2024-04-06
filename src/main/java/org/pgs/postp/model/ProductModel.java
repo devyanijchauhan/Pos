@@ -50,7 +50,7 @@ public class ProductModel {
 
     private List<SupplierModel> suppliers;
 
-    // Constructors
+
     public ProductModel() {
     }
 
@@ -67,7 +67,7 @@ public class ProductModel {
         this.suppliers = suppliers;
     }
 
-    // Getters and Setters
+
     public Long getProductId() {
         return productId;
     }

@@ -27,7 +27,6 @@ public class CustomerPurchaseHistoryMapper {
         }
         CustomerPurchaseHistoryModel historyModel = new CustomerPurchaseHistoryModel();
         historyModel.setPurchaseID(historyDTO.getPurchaseID());
-        // Assuming customer and transaction IDs are set via CustomerModel and TransactionModel objects respectively
         if (historyDTO.getCustomerId() != null) {
             CustomerModel customer = new CustomerModel();
             customer.setId(historyDTO.getCustomerId());

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<InvoiceModel, Long> {
-    // You can add custom query methods if needed
+
 
     @Query("SELECT SUM(i.totalMRP) FROM InvoiceModel i")
     Long getTotalMRP();
@@ -25,11 +25,9 @@ public interface InvoiceRepository extends JpaRepository<InvoiceModel, Long> {
     Long getTotalPrice();
 
     //for week
-    // Count invoices created between start and end date (inclusive)
     @Query("SELECT COUNT(i) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
     int countByCreatedAtBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-    // Custom query method to get total MRP of invoices created within the current week
     @Query("SELECT COALESCE(SUM(i.totalMRP), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
     Long getTotalMRPForCurrentWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
@@ -42,6 +40,7 @@ public interface InvoiceRepository extends JpaRepository<InvoiceModel, Long> {
     @Query("SELECT COALESCE(SUM(i.totalPrice), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
     Long getTotalPriceForCurrentWeek(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
+    //for Month
     @Query("SELECT COALESCE(SUM(i.totalMRP), 0) FROM InvoiceModel i WHERE i.dateTime BETWEEN :startDate AND :endDate")
     Long getTotalMRPForCurrentMonth(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 

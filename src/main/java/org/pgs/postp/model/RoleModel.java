@@ -18,7 +18,7 @@ public class RoleModel {
     @OneToMany(mappedBy = "role")
     private List<UserModel> users;
 
-    // Constructors
+
     public RoleModel() {
     }
 
@@ -26,7 +26,7 @@ public class RoleModel {
         this.roleName = roleName;
     }
 
-    // Getters and Setters
+
     public Long getRoleID() {
         return roleID;
     }

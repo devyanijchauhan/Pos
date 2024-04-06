@@ -5,7 +5,7 @@ public class TaxDTO {
     private String taxName;
     private double taxRate;
 
-    // Constructors
+
     public TaxDTO() {
     }
 
@@ -15,7 +15,7 @@ public class TaxDTO {
         this.taxRate = taxRate;
     }
 
-    // Getters and Setters
+
     public Long getTaxID() {
         return taxID;
     }

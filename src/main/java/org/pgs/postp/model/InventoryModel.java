@@ -21,7 +21,7 @@ public class InventoryModel {
     @Column(name = "Quantity", nullable = false)
     private BigDecimal quantity;
 
-    // Constructors
+
     public InventoryModel() {
     }
 
@@ -30,7 +30,7 @@ public class InventoryModel {
         this.quantity = quantity;
     }
 
-    // Getters and Setters
+
     public Long getInventoryID() {
         return inventoryID;
     }

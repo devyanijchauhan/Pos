@@ -11,7 +11,7 @@ public class TransactionDTO {
     private String paymentMethod;
     private LocalDateTime transactionDate;
 
-    // Constructors
+
     public TransactionDTO() {
     }
 
@@ -24,7 +24,7 @@ public class TransactionDTO {
         this.transactionDate = transactionDate;
     }
 
-    // Getters and Setters
+
     public Long getTransactionID() {
         return transactionID;
     }

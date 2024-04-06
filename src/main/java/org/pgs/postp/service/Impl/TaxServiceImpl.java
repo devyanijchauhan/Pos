@@ -53,7 +53,6 @@ public class TaxServiceImpl implements TaxService {
         existingTax.setTaxName(taxDTO.getTaxName());
         existingTax.setTaxRate(taxDTO.getTaxRate());
 
-        // Update properties here
         TaxModel updatedTax = taxRepository.save(existingTax);
         return taxMapper.toDTO(updatedTax);
     }

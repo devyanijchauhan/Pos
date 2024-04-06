@@ -30,7 +30,7 @@ public class TransactionDetailModel {
     @Column(name = "Discount", nullable = false)
     private double discount;
 
-    // Constructors
+
     public TransactionDetailModel() {
     }
 
@@ -42,7 +42,7 @@ public class TransactionDetailModel {
         this.discount = discount;
     }
 
-    // Getters and Setters
+
     public Long getTransactionDetailID() {
         return transactionDetailID;
     }

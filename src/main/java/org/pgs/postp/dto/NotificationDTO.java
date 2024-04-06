@@ -5,7 +5,7 @@ public class NotificationDTO {
     private Long notificationID;
     private String message;
 
-    // Constructors
+
     public NotificationDTO() {
     }
 
@@ -14,7 +14,7 @@ public class NotificationDTO {
         this.message = message;
     }
 
-    // Getter and Setter
+
     public Long getNotificationID() {
         return notificationID;
     }

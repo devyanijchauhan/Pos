@@ -49,7 +49,7 @@ public class PurchaseOrderModel {
     private String status;
 
 
-    // Constructors
+
     public PurchaseOrderModel() {
     }
 
@@ -69,7 +69,7 @@ public class PurchaseOrderModel {
         this.status = status;
     }
 
-    // Getters and Setters
+
 
     public Long getId() {
         return id;

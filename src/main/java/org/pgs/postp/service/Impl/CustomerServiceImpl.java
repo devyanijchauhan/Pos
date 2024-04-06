@@ -87,9 +87,6 @@ public class CustomerServiceImpl implements CustomerService {
         if(customerDTO.getAddress()!=null){
             existingCustomer.setAddress(customerDTO.getAddress());
         }
-//        existingCustomer.setName(customerDTO.getName());
-//        existingCustomer.setEmail(customerDTO.getEmail());
-//        existingCustomer.setPhone(customerDTO.getPhone());
         CustomerModel updatedCustomer = customerRepository.save(existingCustomer);
         return customerMapper.toDTO(updatedCustomer);
     }
@@ -103,14 +100,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public void processCSV(MultipartFile file) throws IOException {
-        // Check CSV file headers
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-//        String headerLine = br.readLine();
-//        if (headerLine == null || !headerLine.equals("Name, Email, Phone, Address")) {
-//            throw new IllegalArgumentException("Invalid CSV file format or headers");
-//        }
 
-        // Skip the header line
         br.readLine();
 
 
@@ -133,19 +124,12 @@ public class CustomerServiceImpl implements CustomerService {
             BigInteger phone = new BigInteger(data[2].trim());
             String address = data[3].trim();
 
-//            if (customerRepository.existsByEmail(email) || customerRepository.existsByPhone(phone)) {
-//                // Skip saving if email or phone already exists
-//                continue;
-//            }
+
 
             if (existingEmails.contains(email) || existingPhones.contains(phone)) {
                 System.out.println("Duplicate email or phone found in CSV, skipping record: " + email + " / " + phone);
                 continue;
-//                throw new RuntimeException("Duplicate email found in CSV: " + email);
             }
-//            if (existingPhones.contains(phone)) {
-//                throw new RuntimeException("Duplicate phone number found in CSV: " + phone);
-//            }
 
 
             CustomerModel customerModel = new CustomerModel();
@@ -158,8 +142,6 @@ public class CustomerServiceImpl implements CustomerService {
             existingEmails.add(email);
             existingPhones.add(phone);
         }
-
-        // Save only the non-duplicate customer models
         customerRepository.saveAll(customersToAdd);
         br.close();
     }

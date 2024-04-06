@@ -34,7 +34,7 @@ public class SupplierModel {
     @Column(name = "Address")
     private String address;
 
-    // Constructors
+
     public SupplierModel() {
     }
 
@@ -49,7 +49,7 @@ public class SupplierModel {
         this.address = address;
     }
 
-    // Getters and Setters
+
     public Long getSupplierID() {
         return supplierID;
     }

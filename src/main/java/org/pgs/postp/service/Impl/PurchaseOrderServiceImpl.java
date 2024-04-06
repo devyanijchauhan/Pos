@@ -41,7 +41,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public PurchaseOrderDTO createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         PurchaseOrderModel purchaseOrder = purchaseOrderMapper.toEntity(purchaseOrderDTO);
-        // Additional logic if needed
         PurchaseOrderModel savedPurchaseOrder = purchaseOrderRepository.save(purchaseOrder);
         return purchaseOrderMapper.toDTO(savedPurchaseOrder);
     }
@@ -51,7 +50,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         PurchaseOrderModel existingPurchaseOrder = purchaseOrderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Purchase order not found with id: " + id));
 
-        // Update fields here
 
         if (purchaseOrderDTO.getSupplier() != null) {
             existingPurchaseOrder.setSupplier(purchaseOrderDTO.getSupplier());
@@ -88,7 +86,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             existingPurchaseOrder.setStatus(purchaseOrderDTO.getStatus());
         }
 
-        // Save the updated purchase order
         PurchaseOrderModel updatedPurchaseOrder = purchaseOrderRepository.save(existingPurchaseOrder);
         return purchaseOrderMapper.toDTO(updatedPurchaseOrder);
     }

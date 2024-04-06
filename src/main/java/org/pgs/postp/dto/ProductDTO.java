@@ -17,7 +17,7 @@ public class ProductDTO {
     private byte[] barcodeImage;
     private List<Long> supplierIds;
 
-    // Constructors
+
     public ProductDTO() {
     }
 
@@ -35,7 +35,7 @@ public class ProductDTO {
         this.supplierIds = supplierIds;
     }
 
-    // Getters and Setters
+
     public Long getProductId() {
         return productId;
     }

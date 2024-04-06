@@ -23,7 +23,7 @@ public class CustomerPurchaseHistoryModel {
     @Column(name = "PurchaseDate", nullable = false)
     private LocalDateTime purchaseDate;
 
-    // Constructors
+
     public CustomerPurchaseHistoryModel() {
     }
 
@@ -33,7 +33,6 @@ public class CustomerPurchaseHistoryModel {
         this.purchaseDate = purchaseDate;
     }
 
-    // Getters and Setters
     public Long getPurchaseID() {
         return purchaseID;
     }

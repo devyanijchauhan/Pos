@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaxRepository extends JpaRepository<TaxModel, Long> {
-    // You can add custom query methods if needed
+
 }

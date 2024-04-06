@@ -24,7 +24,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    // Custom response class for success and error cases
+
     static class Response<T> {
         private final String message;
         private final T data;
