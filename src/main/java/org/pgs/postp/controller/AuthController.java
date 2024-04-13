@@ -1,15 +1,19 @@
 package org.pgs.postp.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.pgs.postp.dto.auth.request.AuthRequestDTO;
 import org.pgs.postp.dto.auth.response.JwtResponseDTO;
 import org.pgs.postp.model.UserModel;
 import org.pgs.postp.model.RoleModel;
 import org.pgs.postp.service.Impl.JwtService;
 import org.pgs.postp.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,9 +64,36 @@ public class AuthController {
     public String test() {
         try {
             return "Welcome";
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        try {
+            String token = extractTokenFromRequest(request);
+            // Add the token to the list of invalidated tokens
+            jwtService.invalidateToken(token);
+            // Clear the security context, effectively logging out the user
+            SecurityContextHolder.clearContext();
+            return ResponseEntity.ok().body("Logout successful");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Logout failed: " + e.getMessage());
+        }
+    }
+
+    private String extractTokenFromRequest(HttpServletRequest request) {
+        final String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+
+        throw new RuntimeException("Authorization header is missing or invalid");
+    }
+
+
 }
+
+
