@@ -58,5 +58,4 @@ public interface InvoiceService {
 
     void updateProductQuantities(List<Cart> cartItems);
 
-
 }

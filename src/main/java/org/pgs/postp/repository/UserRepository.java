@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     boolean existsByPhone(BigInteger phone);
 
+
+    public UserModel findByUsername(String username);
+
 }

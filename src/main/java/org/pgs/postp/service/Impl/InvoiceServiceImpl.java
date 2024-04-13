@@ -362,4 +362,5 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         return invoiceRepository.getTotalPriceForCurrentMonth(startDateTime, endDateTime);
     }
+
 }

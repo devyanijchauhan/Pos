@@ -1,10 +1,16 @@
 package org.pgs.postp.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Data
+@ToString
 @Table(name = "Users")
 public class UserModel {
 
@@ -28,20 +34,20 @@ public class UserModel {
     @Column(name = "Phone")
     private BigInteger phone;
 
-    @Column(name = "Role", nullable = false)
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<RoleModel> roles = new HashSet<>();
 
 
     public UserModel() {
     }
 
-    public UserModel(String username, String password, String name, String email, BigInteger phone, String role) {
+    public UserModel(String username, String password, String name, String email, BigInteger phone, Set<RoleModel> roles) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.role = role;
+        this.roles = roles;
     }
 
 
@@ -81,7 +87,7 @@ public class UserModel {
 
     public void setPhone(BigInteger phone) {this.phone = phone;}
 
-    public String getRole() {return role;}
+    public Set<RoleModel> getRoles() {return roles;}
 
-    public void setRole(String role) {this.role = role;}
+    public void setRoles(Set<RoleModel> roles) {this.roles = roles;}
 }

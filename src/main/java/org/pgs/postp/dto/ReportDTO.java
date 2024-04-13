@@ -24,6 +24,7 @@ public class ReportDTO {
     private long totalDiscountForMonth;
     private long totalPriceForMonth;
 
+
     public ReportDTO() {
     }
 

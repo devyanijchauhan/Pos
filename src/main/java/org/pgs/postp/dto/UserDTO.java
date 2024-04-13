@@ -1,6 +1,9 @@
 package org.pgs.postp.dto;
 
+import org.pgs.postp.model.RoleModel;
+
 import java.math.BigInteger;
+import java.util.Set;
 
 public class UserDTO {
     private Long userID;
@@ -9,19 +12,19 @@ public class UserDTO {
     private String name;
     private String email;
     private BigInteger phone;
-    private String role;
+    private Set<RoleModel> roles;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long userID, String username, String password, String name, String email, BigInteger phone, String role) {
+    public UserDTO(Long userID, String username, String password, String name, String email, BigInteger phone, Set<RoleModel> roles) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.role = role;
+        this.roles = roles;
     }
 
     public Long getUserID() {
@@ -72,9 +75,9 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public String getRole() {return role;}
+    public Set<RoleModel> getRoles() {return roles;}
 
-    public void setRole(String role) {this.role = role;}
+    public void setRoles(Set<RoleModel> roles) {this.roles = roles;}
 
     @Override
     public String toString() {
@@ -85,7 +88,7 @@ public class UserDTO {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
+                ", roles='" + roles + '\'' +
                 '}';
     }
 }

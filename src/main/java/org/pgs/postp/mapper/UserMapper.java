@@ -18,7 +18,7 @@ public class UserMapper {
         dto.setName(model.getName());
         dto.setEmail(model.getEmail());
         dto.setPhone(model.getPhone());
-        dto.setRole(model.getRole());
+        dto.setRoles(model.getRoles());
 
         return dto;
     }
@@ -32,7 +32,7 @@ public class UserMapper {
         model.setName(dto.getName());
         model.setEmail(dto.getEmail());
         model.setPhone(dto.getPhone());
-        model.setRole(dto.getRole());
+        model.setRoles(dto.getRoles());
 
         return model;
     }

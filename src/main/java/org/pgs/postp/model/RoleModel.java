@@ -15,8 +15,7 @@ public class RoleModel {
     @Column(name = "RoleName", unique = true, nullable = false)
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    private List<UserModel> users;
+
 
 
     public RoleModel() {
@@ -43,11 +42,5 @@ public class RoleModel {
         this.roleName = roleName;
     }
 
-    public List<UserModel> getUsers() {
-        return users;
-    }
 
-    public void setUsers(List<UserModel> users) {
-        this.users = users;
-    }
 }
