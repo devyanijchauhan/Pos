@@ -60,38 +60,38 @@ public class ReportController {
         // Invoice-related data
         long invoiceCount = invoiceService.getInvoiceCount();
         reportDTO.setInvoiceCount(invoiceCount);
-        long totalMRP = invoiceService.getTotalMRP();
-        reportDTO.setTotalMRP(totalMRP);
-        long totalTax = invoiceService.getTotalTax();
-        reportDTO.setTotalTax(totalTax);
-        long totalDiscount = invoiceService.getTotalDiscount();
-        reportDTO.setTotalDiscount(totalDiscount);
-        long totalPrice = invoiceService.getTotalPrice();
-        reportDTO.setTotalPrice(totalPrice);
+        Long totalMRP = invoiceService.getTotalMRP();
+        reportDTO.setTotalMRP(totalMRP != null ? totalMRP : 0);
+        Long totalTax = invoiceService.getTotalTax();
+        reportDTO.setTotalTax(totalTax != null ? totalTax : 0);
+        Long totalDiscount = invoiceService.getTotalDiscount();
+        reportDTO.setTotalDiscount(totalDiscount != null ? totalDiscount : 0);
+        Long totalPrice = invoiceService.getTotalPrice();
+        reportDTO.setTotalPrice(totalPrice != null ? totalPrice : 0);
 
         // Weekly invoice data for the current week
         int totalInvoicesForWeek = invoiceService.getTotalInvoicesCreatedInCurrentWeek();
         reportDTO.setTotalInvoicesForWeek(totalInvoicesForWeek);
         Long totalMRPForWeek = invoiceService.getTotalMRPForCurrentWeek();
-        reportDTO.setTotalMRPForWeek(totalMRPForWeek);
+        reportDTO.setTotalMRPForWeek(totalMRPForWeek != null ? totalMRPForWeek : 0);
         Long totalTaxForWeek = invoiceService.getTotalTaxForCurrentWeek();
-        reportDTO.setTotalTaxForWeek(totalTaxForWeek);
+        reportDTO.setTotalTaxForWeek(totalTaxForWeek != null ? totalTaxForWeek : 0);
         Long totalDiscountForWeek = invoiceService.getTotalDiscountForCurrentWeek();
-        reportDTO.setTotalDiscountForWeek(totalDiscountForWeek);
+        reportDTO.setTotalDiscountForWeek(totalDiscountForWeek != null ? totalDiscountForWeek : 0);
         Long totalPriceForWeek = invoiceService.getTotalPriceForCurrentWeek();
-        reportDTO.setTotalPriceForWeek(totalPriceForWeek);
+        reportDTO.setTotalPriceForWeek(totalPriceForWeek != null ? totalPriceForWeek : 0);
 
         // Monthly invoice data for the current month
         int totalInvoicesForMonth = invoiceService.getTotalInvoicesCreatedInCurrentMonth();
         reportDTO.setTotalInvoicesForMonth(totalInvoicesForMonth);
         Long totalMRPForMonth = invoiceService.getTotalMRPForCurrentMonth();
-        reportDTO.setTotalMRPForMonth(totalMRPForMonth);
+        reportDTO.setTotalMRPForMonth(totalMRPForMonth != null ? totalMRPForMonth : 0);
         Long totalTaxForMonth = invoiceService.getTotalTaxForCurrentMonth();
-        reportDTO.setTotalTaxForMonth(totalTaxForMonth);
+        reportDTO.setTotalTaxForMonth(totalTaxForMonth != null ? totalTaxForMonth : 0);
         Long totalDiscountForMonth = invoiceService.getTotalDiscountForCurrentMonth();
-        reportDTO.setTotalDiscountForMonth(totalDiscountForMonth);
+        reportDTO.setTotalDiscountForMonth(totalDiscountForMonth != null ? totalDiscountForMonth : 0);
         Long totalPriceForMonth = invoiceService.getTotalPriceForCurrentMonth();
-        reportDTO.setTotalPriceForMonth(totalPriceForMonth);
+        reportDTO.setTotalPriceForMonth(totalPriceForMonth != null ? totalPriceForMonth : 0);
 
 
         return new ResponseEntity<>(reportDTO, HttpStatus.OK);
