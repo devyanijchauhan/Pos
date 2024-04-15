@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasAuthority('ADMIN') || hasAuthority('MANAGER')")
+@PreAuthorize("hasAuthority('ADMIN') || hasAuthority('MANAGER') || hasAuthority('CASHIER')")
 @RequestMapping("/api/suppliers")
 @CrossOrigin( origins = "http://Localhost:4200")
 public class SupplierController {
