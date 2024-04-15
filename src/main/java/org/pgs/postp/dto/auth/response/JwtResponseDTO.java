@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 public class JwtResponseDTO {
     private String accessToken;
+    private Long userID;
     private String username;
     private String name;
     private String email;
