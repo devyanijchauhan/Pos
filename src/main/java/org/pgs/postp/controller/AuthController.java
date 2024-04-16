@@ -49,6 +49,7 @@ public class AuthController {
 
             return JwtResponseDTO.builder()
                     .accessToken(token)
+                    .userID(user.getUserID())
                     .username(user.getUsername())
                     .name(user.getName())
                     .email(user.getEmail())

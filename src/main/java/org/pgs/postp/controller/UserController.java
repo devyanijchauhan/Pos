@@ -1,20 +1,18 @@
 package org.pgs.postp.controller;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.pgs.postp.dto.UserDTO;
-import org.pgs.postp.dto.auth.request.AuthRequestDTO;
-import org.pgs.postp.dto.auth.response.JwtResponseDTO;
 import org.pgs.postp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.pgs.postp.dto.ResetPasswordRequest;
 
 import java.util.List;
+import org.springframework.http.MediaType;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('MANAGER')")
@@ -64,7 +62,9 @@ public class UserController {
     public ResponseEntity<?> resetPassword(@PathVariable Long userId, @RequestBody ResetPasswordRequest resetPasswordRequest) {
         try {
             userService.resetUserPassword(userId, resetPasswordRequest.getNewPassword());
-            return ResponseEntity.ok("Password reset successfully.");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Password reset successfully.");
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
