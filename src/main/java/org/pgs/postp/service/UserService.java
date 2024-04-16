@@ -35,6 +35,5 @@ public interface UserService {
 
     boolean isEnabled();
 
-
-
+    void resetUserPassword(Long userId, String newPassword);
 }

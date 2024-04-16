@@ -16,8 +16,6 @@ public class RoleModel {
     private String roleName;
 
 
-
-
     public RoleModel() {
     }
 

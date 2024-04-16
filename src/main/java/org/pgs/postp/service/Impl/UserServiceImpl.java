@@ -18,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import java.util.Collection;
 import java.util.Collections;
@@ -153,4 +155,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new CustomUserDetails(user);
     }
 
+    @Override
+    public void resetUserPassword(Long userId, String newPassword) {
+        UserModel user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        userRepository.save(user);
+    }
 }

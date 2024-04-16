@@ -15,7 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -40,8 +39,6 @@ public class AuthController {
     @PostMapping("/login")
     public JwtResponseDTO authenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO) {
         try {
-
-
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
             String token = jwtService.GenerateToken(authRequestDTO.getUsername());
             UserModel user = userService.findByUsername(authRequestDTO.getUsername());
@@ -52,7 +49,6 @@ public class AuthController {
 
             return JwtResponseDTO.builder()
                     .accessToken(token)
-                    .userID(user.getUserID())
                     .username(user.getUsername())
                     .name(user.getName())
                     .email(user.getEmail())
@@ -77,7 +73,9 @@ public class AuthController {
     public ResponseEntity<?> logout(HttpServletRequest request) {
         try {
             String token = extractTokenFromRequest(request);
+            // Add the token to the list of invalidated tokens
             jwtService.invalidateToken(token);
+            // Clear the security context, effectively logging out the user
             SecurityContextHolder.clearContext();
             return ResponseEntity.ok().body("Logout successful");
         } catch (Exception e) {
@@ -94,8 +92,5 @@ public class AuthController {
 
         throw new RuntimeException("Authorization header is missing or invalid");
     }
-
-
 }
-
 

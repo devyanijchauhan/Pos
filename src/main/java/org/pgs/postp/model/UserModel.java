@@ -1,5 +1,4 @@
 package org.pgs.postp.model;
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -37,7 +36,7 @@ public class UserModel {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleModel> roles = new HashSet<>();
 
-
+ 
     public UserModel() {
     }
 

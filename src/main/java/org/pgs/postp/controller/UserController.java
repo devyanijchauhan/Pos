@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.pgs.postp.dto.ResetPasswordRequest;
 
 import java.util.List;
 
@@ -59,4 +60,13 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/reset-password/{userId}")
+    public ResponseEntity<?> resetPassword(@PathVariable Long userId, @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        try {
+            userService.resetUserPassword(userId, resetPasswordRequest.getNewPassword());
+            return ResponseEntity.ok("Password reset successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
