@@ -68,6 +68,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("Phone number already exists");
         }
 
+        String encodedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
+        userDTO.setPassword(encodedPassword);
+
         UserModel user = userMapper.toEntity(userDTO);
         UserModel savedUser = userRepository.save(user);
         return userMapper.toDTO(savedUser);
